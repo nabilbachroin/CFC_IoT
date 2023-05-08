@@ -1,7 +1,11 @@
 # CFC_IoT (Cloud and Fog Computing in the Internet of Things)
 Just for personal note as a reminder:
+
 -Directory local: C:\Users\acer\AppData\Local\Arduino15\RemoteSketchbook\ArduinoCloud\7fd81f24-3e5f-439a-893d-496698ba0c3e\CFC_IoT
+
 -Don't edit from the web editor, because it will replace the local version.
+
+
 may edit from the web editor with a note:
 1. Make sure the local changes have been pushed to the Arduino web editor and on GitHub as
 2. Make sure the local changes have been pushed to GitHub as a back up and version control
