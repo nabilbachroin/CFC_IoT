@@ -1,3 +1,6 @@
+# CFC_IoT (Cloud and Fog Computing in the Internet of Things)
+directory local: C:\Users\acer\AppData\Local\Arduino15\RemoteSketchbook\ArduinoCloud\7fd81f24-3e5f-439a-893d-496698ba0c3e\CFC_IoT
+
 # Smart Parking (PD - Parkiren Dewe)
 - blockchain
 - pzem (energy monitor)
