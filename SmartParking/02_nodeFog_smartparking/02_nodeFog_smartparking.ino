@@ -4,7 +4,12 @@
 // #include <SPI.h>
 // #include <SD.h>
 // #include <MFRC522.h>
-// #include <Ping.h>
+#include <ESPping.h>
+
+// Indicator for Internet connection
+const int led1 = 4; //D2
+const int led2 = 16; //D0
+bool isConnectedToInternet = false;
 
 // Wi-Fi credentials
 const char* ssid = "NabilBachroin";
@@ -34,6 +39,11 @@ void setup() {
   Serial.begin(115200);
   Serial.println("Test Serial");
 
+  pinMode(led1, OUTPUT);
+  pinMode(led2, OUTPUT);
+  digitalWrite(led1, LOW);
+  digitalWrite(led2, LOW);
+
   // Initialize SPI for SD card and RFID
   // SPI.begin();
 
@@ -60,7 +70,17 @@ void loop() {
   if (WiFi.status() != WL_CONNECTED) {
     connectToWiFiAndAWS();
   }
-  else Serial.println("harusnya udah konek");
+  
+  isConnectedToInternet = Ping.ping("google.com");
+  if (isConnectedToInternet) {
+    digitalWrite(led1, HIGH);
+    digitalWrite(led2, LOW);
+    Serial.println("led1 nyala");
+  } else {
+    digitalWrite(led1, LOW);
+    digitalWrite(led2, HIGH);
+    Serial.println("led2 nyala");
+  }
 
 
 

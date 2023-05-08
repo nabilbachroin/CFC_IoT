@@ -1,9 +1,10 @@
-#include <WiFi.h>
-#include <PubSubClient.h>
-#include <Wire.h>
-#include <Adafruit_SSD1306.h>
-#include <MFRC522.h>
-#include <Servo.h>
+#include <ESP8266WiFi.h>
+// #include <WiFi.h>
+// #include <PubSubClient.h>
+// #include <Wire.h>
+// #include <Adafruit_SSD1306.h>
+// #include <MFRC522.h>
+// #include <Servo.h>
 
 // Wi-Fi credentials
 char* ssid = "NabilBachroin";
