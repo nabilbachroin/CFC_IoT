@@ -6,8 +6,8 @@
 #include <Servo.h>
 
 // Wi-Fi credentials
-char* ssid = "Bachroin";
-const char* password = "masnabilganteng";
+char* ssid = "NabilBachroin";
+const char* password = "nabilganteng";
 
 // Fog node IP address
 const IPAddress fogNodeIP(192, 168, 1, 100);

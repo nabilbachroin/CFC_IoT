@@ -1,13 +1,14 @@
-#include <WiFi.h>
-#include <PubSubClient.h>
-#include <SPI.h>
-#include <SD.h>
-#include <MFRC522.h>
-#include <Ping.h>
+#include <ESP8266WiFi.h>
+// #include <WiFi.h>
+// #include <PubSubClient.h>
+// #include <SPI.h>
+// #include <SD.h>
+// #include <MFRC522.h>
+// #include <Ping.h>
 
 // Wi-Fi credentials
-char* ssid = "Bachroin";
-const char* password = "masnabilganteng";
+const char* ssid = "NabilBachroin";
+const char* password = "nabilganteng";
 
 // AWS IoT endpoint and credentials
 // const char* awsEndpoint = "your-aws-iot-endpoint";
@@ -25,12 +26,13 @@ const char* password = "masnabilganteng";
 // Servo pins
 // const int servoPin = 18;
 
-WiFiServer server(80);
-WiFiClient espClient;
-PubSubClient mqttClient(espClient);
+// WiFiServer server(80);
+// WiFiClient espClient;
+// PubSubClient mqttClient(espClient);
 
 void setup() {
   Serial.begin(115200);
+  Serial.println("Test Serial");
 
   // Initialize SPI for SD card and RFID
   // SPI.begin();
@@ -50,25 +52,33 @@ void setup() {
   connectToWiFiAndAWS();
 
   // Start the server
-  server.begin();
+  // server.begin();
 }
 
 void loop() {
-  // Check Wi-Fi and MQTT connection
-  if (WiFi.status() != WL_CONNECTED || !mqttClient.connected()) {
+  // hapus aja kalau sudah bisa konek
+  if (WiFi.status() != WL_CONNECTED) {
     connectToWiFiAndAWS();
   }
+  else Serial.println("harusnya udah konek");
+
+
+
+  // Check Wi-Fi and MQTT connection
+  // if (WiFi.status() != WL_CONNECTED || !mqttClient.connected()) {
+  //   connectToWiFiAndAWS();
+  // }
 
   // Handle incoming MQTT messages
-  mqttClient.loop();
+  // mqttClient.loop();
 
   // Handle incoming client connections (from edge devices)
-  WiFiClient client = server.available();
-  if (client) {
-    Serial.println("Client connected");
-    handleClient(client);
-    client.stop();
-  }
+  // WiFiClient client = server.available();
+  // if (client) {
+  //   Serial.println("Client connected");
+  //   handleClient(client);
+  //   client.stop();
+  // }
 }
 
 
