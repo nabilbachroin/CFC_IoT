@@ -6,8 +6,8 @@
 #include <Servo.h>
 
 // Wi-Fi credentials
-const char* ssid = "Your_WiFi_SSID";
-const char* password = "Your_WiFi_Password";
+char* ssid = "Bachroin";
+const char* password = "masnabilganteng";
 
 // Fog node IP address
 const IPAddress fogNodeIP(192, 168, 1, 100);
@@ -33,13 +33,18 @@ WiFiClient wifiClient;
 PubSubClient mqttClient(wifiClient);
 
 // Add from pcinu
-int space=0;
-const int led_wifi_con=;
-const int led_wifi_dis=;
-const int pb1=;
-const int pb2=;
+int space = 0;
+const int led_wifi_con = 0;
+const int led_wifi_dis = 0;
+const int pb1 = 0;
+const int pb2 = 0;
+const int move_sensor = 0;
 // database register = name, rfid num
 // database transaction = rfid num, balance
+  //masalah balance ini bisa lakukan penarikan biaya sesuai durasi waktu parkir
+// database status = rfid num, status 
+  //jadi dia nge tap yang kedua kalinya, di oled ada pertanyaan apakah anda ingin keluar dari tempar parkir?
+  //hal ini juga bisa digunakan untuk pengaman jika tidak sengaja melakukan tap dua kali
 
 void setup() {
   Serial.begin(115200);
@@ -99,27 +104,4 @@ void loop() {
       }
     }
   }
-}
-
-void connectToWiFi() {
-  WiFi.begin(ssid, password);
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(1000);
-    Serial.println("Connecting to Wi-Fi...");
-  }
-  Serial.println("Connected to Wi-Fi");
-}
-
-void openServo() {
-  myservo.write(0);
-  delay(5000);
-  myservo.write(90);
-}
-
-void displayMessage(const char* message) {
-  display.clearDisplay();
-  display.setCursor(0, 0);
-  display.println(message);
-  display.display();
-  delay(3000);
 }
