@@ -10,7 +10,6 @@
 const int led1 = 4; //D2
 const int led2 = 16; //D0
 bool isConnectedToInternet = false;
-//IPAddress ip_ping (192, 168, 137, 1);
 
 // Wi-Fi credentials
 const char* ssid = "NabilBachroin";
@@ -72,7 +71,6 @@ void loop() {
   }
   
   isConnectedToInternet = Ping.ping("www.google.com");
-  //isConnectedToInternet = Ping.ping(ip_ping,1);
   if (isConnectedToInternet) {
     digitalWrite(led1, HIGH);
     digitalWrite(led2, LOW);

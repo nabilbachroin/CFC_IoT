@@ -11,7 +11,7 @@ char* ssid = "NabilBachroin";
 const char* password = "nabilganteng";
 
 // Fog node IP address
-const IPAddress fogNodeIP(192, 168, 1, 100);
+const IPAddress fogNodeIP(192, 168, 137, 247);
 
 // OLED display pins
 // #define OLED_SDA 4
