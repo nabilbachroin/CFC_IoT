@@ -6,7 +6,7 @@
 #include <Ping.h>
 
 // Wi-Fi credentials
-const char* ssid = "Bachroin";
+char* ssid = "Bachroin";
 const char* password = "masnabilganteng";
 
 // AWS IoT endpoint and credentials
