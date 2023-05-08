@@ -4,12 +4,13 @@
 // #include <SPI.h>
 // #include <SD.h>
 // #include <MFRC522.h>
-#include <ESPping.h>
+#include <ESP8266Ping.h>
 
 // Indicator for Internet connection
 const int led1 = 4; //D2
 const int led2 = 16; //D0
 bool isConnectedToInternet = false;
+//IPAddress ip_ping (192, 168, 137, 1);
 
 // Wi-Fi credentials
 const char* ssid = "NabilBachroin";
@@ -66,23 +67,19 @@ void setup() {
 }
 
 void loop() {
-  // hapus aja kalau sudah bisa konek
   if (WiFi.status() != WL_CONNECTED) {
-    connectToWiFiAndAWS();
+    WiFi.begin(ssid, password);
   }
   
-  isConnectedToInternet = Ping.ping("google.com");
+  isConnectedToInternet = Ping.ping("www.google.com");
+  //isConnectedToInternet = Ping.ping(ip_ping,1);
   if (isConnectedToInternet) {
     digitalWrite(led1, HIGH);
     digitalWrite(led2, LOW);
-    Serial.println("led1 nyala");
   } else {
     digitalWrite(led1, LOW);
     digitalWrite(led2, HIGH);
-    Serial.println("led2 nyala");
   }
-
-
 
   // Check Wi-Fi and MQTT connection
   // if (WiFi.status() != WL_CONNECTED || !mqttClient.connected()) {
