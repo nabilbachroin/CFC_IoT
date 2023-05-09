@@ -12,23 +12,46 @@ bool deviceConnected = false;
 
 class MyServerCallbacks: public BLEServerCallbacks 
   {
-    void onConnect(BLEServer* pServer) {
-      deviceConnected = true;
-    };
-
-    void onDisconnect(BLEServer* pServer) {
-      deviceConnected = false;
-    }
+    void onConnect(BLEServer* pServer) 
+      {
+        deviceConnected = true;
+        Serial.println("Client connected");
+      }
+    void onDisconnect(BLEServer* pServer) 
+      {
+        deviceConnected = false;
+        Serial.println("Client disconnected");
+      }
   };
+
+// test ble 09 may 2023
+String receivedData = "";
+class MyCharacteristicCallbacks : public BLECharacteristicCallbacks 
+{
+  void onWrite(BLECharacteristic *pCharacteristic) 
+  {
+    std::string value = pCharacteristic->getValue();
+    receivedData = String(value.c_str());
+    Serial.print("Received data: ");
+    Serial.println(receivedData);
+  }
+};
 
 void setup()
   {
+    Serial.begin(115200);
     setupBLE();
   }
 
 void loop()
   {
-    delay(10);
+    if (deviceConnected) 
+      {
+        Serial.print("Received data: ");
+        Serial.println(receivedData);
+        receivedData = "";
+      }
+    delay(1000);
   }
 
 

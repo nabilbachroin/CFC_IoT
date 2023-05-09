@@ -15,6 +15,7 @@ void setupBLE()
                       );
 
     pCharacteristic->addDescriptor(new BLE2902());
+    pCharacteristic->setCallbacks(new MyCharacteristicCallbacks());
 
     pService->start();
 
