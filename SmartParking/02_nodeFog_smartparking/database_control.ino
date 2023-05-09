@@ -1,3 +1,8 @@
+
+
+// KODE DIBAWAH INI KODE SEBELUM GANTI ESP32
+// TINGGAL BLOK SAMPAI BAWAH KEMUDIAN BARENGKAN UNCOMENNT NYA
+
 // bool isCardRegistered(const String& cardId) {
 //   // Check if the card ID is in the SD card
 //   File file = SD.open("registered_cards.txt", FILE_READ);
