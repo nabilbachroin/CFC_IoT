@@ -1,6 +1,7 @@
 void processRFID(String rfidData)
   {
-    cardUID = rfidData.trim();
+    rfidData.trim();
+    cardUID = rfidData;
     //bluetoothSerial.print("lookup:" + cardUID);
   }
 
