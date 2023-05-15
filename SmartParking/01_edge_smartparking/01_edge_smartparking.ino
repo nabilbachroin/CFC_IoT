@@ -8,6 +8,7 @@
 #define SS_PIN 5
 #define RST_PIN 15
 #define servoPin 25
+#define proximitySensor 26
 const int SDA_PIN = 21;
 const int SCL_PIN = 22;
 const int ledBluePin = 33;
@@ -34,7 +35,7 @@ void setup() {
   gateServo.write(180);
   setupDisplay();
   setup_LedButton();
-
+  pinMode(proximitySensor, INPUT);
   for (byte i = 0; i < 6; i++) {
     key.keyByte[i] = 0xFF;
   }
@@ -60,4 +61,7 @@ void loop() {
     }
   if(digitalRead(buttonGreen)==0) {Serial.println("Button Green Pressed"); delay(333);}
   if(digitalRead(buttonRed)==0) {Serial.println("Button Red Pressed"); delay(333);}
+
+  //TEST PROXIMITY SENSOR
+  //Serial.println(digitalRead(proximitySensor));
 }
