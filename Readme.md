@@ -16,7 +16,7 @@ may edit from the web editor with a note:
 # Smart Parking (PD - Parkiren Dewe)
 - blockchain
 - pzem (energy monitor)
-- 
+- ntar berikan penjelasan kalau kita memisahkan environment nya user dengan admin, jadi ketika kita sedang maintenance systemnya maka user masih bisa menggunakan system smart parking
 
 
 # [Product] Product specs
