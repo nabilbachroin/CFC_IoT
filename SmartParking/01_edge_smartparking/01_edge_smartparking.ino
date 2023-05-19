@@ -4,6 +4,8 @@
 #include <ESP32Servo.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
+#include <Arduino.h>
+#include <DFPlayerMini_Fast.h>
 
 #define SS_PIN 5
 #define RST_PIN 15
@@ -18,6 +20,7 @@ const int buttonRed = 35;
  
 MFRC522 rfid(SS_PIN, RST_PIN);
 Adafruit_SSD1306 display(128, 64, &Wire, -1);
+DFPlayerMini_Fast speaker;
 Servo gateServo;
 MFRC522::MIFARE_Key key; 
 byte nuidPICC[4];
@@ -32,6 +35,7 @@ void setup() {
   rfid.PCD_Init();
   gateServo.setPeriodHertz(50); 
   gateServo.attach(servoPin, 500, 2400); // minim and maks (ms)
+  Serial2.begin(9600, SERIAL_8N1, 12, 13); // RX, TX
   gateServo.write(180);
   setupDisplay();
   setup_LedButton();
@@ -39,6 +43,12 @@ void setup() {
   for (byte i = 0; i < 6; i++) {
     key.keyByte[i] = 0xFF;
   }
+  if (!speaker.begin(Serial2)) 
+    {
+      Serial.println(F("Error: DFPlayer Mini not found"));
+      while(true);
+    }
+  playSpeaker("system_starting.mp3");
 }
  
 void loop() {
@@ -51,6 +61,7 @@ void loop() {
         {
           Serial.println("Oke,lanjut");
           digitalWrite(ledBluePin, 1);
+          playSpeaker("Welcome-pleaseenter.mp3");
           openGate();
         }
       else digitalWrite(ledRedPin, 1);

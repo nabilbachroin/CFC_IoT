@@ -1,3 +1,21 @@
+// name of mp3 file:
+// system_starting.mp3
+// Welcome-pleaseenter.mp3
+// Sorry-parklot_full.mp3
+// Thankyou-becareful_otr.mp3
+// 
+
+void playSpeaker(String music)
+  {
+    speaker.volume(10);  // 0-30
+    if (music=="system_starting.mp3") speaker.play(1);
+    else if (music=="Welcome-pleaseenter.mp3") speaker.play(2);
+    else if (music=="Sorry-parklot_full.mp3") speaker.play(3);
+    else if (music=="Thankyou-becareful_otr.mp3") speaker.play(4);
+    
+    while (speaker.isPlaying()) delay(10);
+  }
+
 void openGate()
   {
     for (int pos = 180; pos >= 90; pos -= 1) 
