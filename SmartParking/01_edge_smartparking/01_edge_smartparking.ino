@@ -1,3 +1,5 @@
+#include <FS.h>
+#include <SD.h>
 #include <SPI.h>
 #include <Wire.h>
 #include <MFRC522.h>
@@ -7,6 +9,7 @@
 #include <Arduino.h>
 #include <DFPlayerMini_Fast.h>
 
+#define SD_CS 13
 #define SS_PIN 5
 #define RST_PIN 15
 #define servoPin 25
@@ -43,6 +46,11 @@ void setup() {
       Serial.println(F("2.Please insert the SD card!"));
       while(true);
     } 
+  if (!SD.begin(SD_CS)) 
+    {
+      Serial.println("Card Mount Failed");
+      return;
+    }
   delay(1000);
   gateServo.write(180);
   setupDisplay();
@@ -53,6 +61,12 @@ void setup() {
       key.keyByte[i] = 0xFF;
     }
   playSpeaker("system_starting.mp3");
+  // playSpeaker("Welcome-pleaseenter.mp3");
+  // playSpeaker("Sorry-parklot_full.mp3");
+  // playSpeaker("Thankyou-becareful_otr.mp3");
+  // test read sd card
+  readFile(SD, "/status_and_balance.txt");
+  readFile(SD, "/registered.txt");
 }
  
 void loop() {

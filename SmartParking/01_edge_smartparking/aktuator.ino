@@ -20,11 +20,12 @@ void openGate()
         gateServo.write(pos);
         delay(15);
       }
-    delay(2000);
+    delay(1500);
     // read proximity
     back_to_counter:
     for (int i = 0; i < 100; i++) // for 10 seconds
       {
+        gateServo.write(90);
         if(digitalRead(proximitySensor) == LOW) 
           {
             delay(2500); // to make sure that the car is already go away
@@ -36,12 +37,7 @@ void openGate()
       {
         gateServo.write(pos);
         delay(33);
-        if(digitalRead(proximitySensor) == LOW) 
-          {
-            gateServo.write(90);
-            delay(777);
-            goto back_to_counter;
-          }
+        if(digitalRead(proximitySensor) == LOW) goto back_to_counter;
       }
   }
 
