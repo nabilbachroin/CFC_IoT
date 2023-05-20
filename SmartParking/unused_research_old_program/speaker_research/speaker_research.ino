@@ -14,10 +14,10 @@ if (!speaker.begin(Serial2)) {  // Use the Serial2
     Serial.println(F("2.Please insert the SD card!"));
     while(true);
   } 
-speaker.play(1);
-//playSpeaker("system_starting.mp3");
-Serial.println("lagi muter");
 delay(3000);
+playSpeaker(1);
+Serial.println("lagi muter");
+//delay(3000);
 }
 
 void loop() {
@@ -25,13 +25,12 @@ void loop() {
 
 }
 
-void playSpeaker(String music)
-  {
-    speaker.volume(30);  // 0-30
-    if (music=="system_starting.mp3") speaker.play(1);
-    else if (music=="Welcome-pleaseenter.mp3") speaker.play(2);
-    else if (music=="Sorry-parklot_full.mp3") speaker.play(3);
-    else if (music=="Thankyou-becareful_otr.mp3") speaker.play(4);
-    
-    //while (speaker.isPlaying()) delay(10);
-  }
+void playSpeaker(int music)
+{
+  if (music == 1) speaker.play(1);  // system_starting.mp3
+  else if (music == 2) speaker.play(2); // Welcome-pleaseenter.mp3
+  else if (music == 3) speaker.play(3); // Sorry-parklot_full.mp3
+  else if (music == 4) speaker.play(4); // Thankyou-becareful_otr.mp3
+  
+  while (speaker.isPlaying()) delay(10);
+}
