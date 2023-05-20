@@ -5,16 +5,13 @@
 // Thankyou-becareful_otr.mp3
 // 
 
-void playSpeaker(String music)
-  {
-    speaker.volume(10);  // 0-30
-    if (music=="system_starting.mp3") speaker.play(1);
-    else if (music=="Welcome-pleaseenter.mp3") speaker.play(2);
-    else if (music=="Sorry-parklot_full.mp3") speaker.play(3);
-    else if (music=="Thankyou-becareful_otr.mp3") speaker.play(4);
-    
-    while (speaker.isPlaying()) delay(10);
-  }
+void playSpeaker(const char* music)
+{
+  if (strcmp(music, "system_starting.mp3") == 0) {speaker.play(1); delay(4000);}
+  else if (strcmp(music, "Welcome-pleaseenter.mp3") == 0) {speaker.play(2); delay(1700);}
+  else if (strcmp(music, "Sorry-parklot_full.mp3") == 0) {speaker.play(3); delay(3000);}
+  else if (strcmp(music, "Thankyou-becareful_otr.mp3") == 0) {speaker.play(4); delay(3000);}
+}
 
 void openGate()
   {

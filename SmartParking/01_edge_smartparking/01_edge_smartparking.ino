@@ -35,18 +35,22 @@ void setup() {
   rfid.PCD_Init();
   gateServo.setPeriodHertz(50); 
   gateServo.attach(servoPin, 500, 2400); // minim and maks (ms)
-  Serial2.begin(9600, SERIAL_8N1, 12, 13); // RX, TX
+  Serial2.begin(9600, SERIAL_8N1, 4, 2); // RX, TX
+  if (!speaker.begin(Serial2)) 
+    {
+      Serial.println(F("Unable to begin:"));
+      Serial.println(F("1.Please recheck the connection!"));
+      Serial.println(F("2.Please insert the SD card!"));
+      while(true);
+    } 
+  delay(1000);
   gateServo.write(180);
   setupDisplay();
   setup_LedButton();
   pinMode(proximitySensor, INPUT);
-  for (byte i = 0; i < 6; i++) {
-    key.keyByte[i] = 0xFF;
-  }
-  if (!speaker.begin(Serial2)) 
+  for (byte i = 0; i < 6; i++) 
     {
-      Serial.println(F("Error: DFPlayer Mini not found"));
-      while(true);
+      key.keyByte[i] = 0xFF;
     }
   playSpeaker("system_starting.mp3");
 }
