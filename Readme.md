@@ -18,6 +18,7 @@ may edit from the web editor with a note:
 - pzem (energy monitor)
 - 
 
+update from Harun 23 May 2023
 
 # [Product] Product specs
 
