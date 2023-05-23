@@ -18,6 +18,7 @@ may edit from the web editor with a note:
 - pzem (energy monitor)
 - ntar berikan penjelasan kalau kita memisahkan environment nya user dengan admin, jadi ketika kita sedang maintenance systemnya maka user masih bisa menggunakan system smart parking
 
+update from Harun 23 May 2023
 
 # [Product] Product specs
 
