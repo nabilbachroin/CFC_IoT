@@ -86,13 +86,10 @@ void setup() {
       key.keyByte[i] = 0xFF;
     }
   playSpeaker("system_starting.mp3");
-  // readFile(SD, "/status_and_balance.txt");
-  // readFile(SD, "/registered.txt");
   readDatabase(SD, "/registered.txt", "/status_and_balance.txt");
 }
  
 void loop() {
-  // //TEST RFID
   readRFID();
   if (cardUID != "") 
     {
@@ -100,7 +97,7 @@ void loop() {
       CardData* card = findCard(cardUID);
       if (card != NULL) 
       {
-        Serial.println("Oke, lanjut");
+        Serial.println("Okay," + card->name);
         display.clearDisplay();
         display.setCursor(0, 0);
         display.println("Welcome, " + card->name);
@@ -109,15 +106,12 @@ void loop() {
         playSpeaker("Welcome-pleaseenter.mp3");
         openGate();
         card->balance -= parkingFee;
+        writeDatabase(SD, "/registered.txt", "/status_and_balance.txt");
       }
       else digitalWrite(ledRedPin, 1);
       delay(1000);
       cardUID="";
       digitalWrite(ledRedPin, LOW);
       digitalWrite(ledBluePin, LOW);
-      writeDatabase(SD, "/registered.txt", "/status_and_balance.txt");
     }
-
-  // //TEST PROXIMITY SENSOR
-  // //Serial.println(digitalRead(proximitySensor));
 }
