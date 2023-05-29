@@ -96,22 +96,65 @@ void loop() {
       Serial.println(cardUID); 
       CardData* card = findCard(cardUID);
       if (card != NULL) 
-      {
-        Serial.println("Okay," + card->name);
-        display.clearDisplay();
-        display.setCursor(0, 0);
-        display.println("Welcome, " + card->name);
-        display.display();
-        digitalWrite(ledBluePin, 1);
-        playSpeaker("Welcome-pleaseenter.mp3");
-        openGate();
-        card->balance -= parkingFee;
-        writeDatabase(SD, "/registered.txt", "/status_and_balance.txt");
-      }
+        {
+          if(card->status == "outside") 
+            {
+              Serial.println(card->name + "Enter");
+              display.clearDisplay();
+              display.setCursor(0, 0);
+              display.println("Welcome, " + card->name);
+              display.println("Balance: " + String(card->balance));
+              display.display();
+              digitalWrite(ledBluePin, 1);
+              playSpeaker("Welcome-pleaseenter.mp3");
+              openGate();
+              card->status = "inside";
+              card->balance -= parkingFee;
+            } 
+          else if(card->status == "inside") 
+            {
+              Serial.println(card->name + "Ask for Go Away?");
+              display.clearDisplay();
+              display.setCursor(0, 0);
+              display.println("Your car is currently inside, " + card->name);
+              display.println("Do you want to checkout?");
+              display.println("-push the button-");
+              display.display();
+              while(1)
+                {
+                  if(digitalRead(buttonGreen)==0) break;
+                  else if(digitalRead(buttonRed)==0) 
+                    {
+                      Serial.println(card->name + "still inside");
+                      display.clearDisplay();
+                      display.setCursor(0, 0);
+                      display.println("Okay, Thank you");
+                      display.display();
+                      delay(750);
+                      goto skipthisstep;
+                    }
+                }
+              Serial.println(card->name + "Go out");
+              display.clearDisplay();
+              display.setCursor(0, 0);
+              display.println("See you, " + card->name);
+              display.println("Balance: " + String(card->balance));
+              display.display();
+              digitalWrite(ledBluePin, 1);
+              playSpeaker("Thankyou-becareful_otr.mp3");
+              openGate();
+              card->status = "outside";
+            }
+          writeDatabase(SD, "/registered.txt", "/status_and_balance.txt");
+        }
       else digitalWrite(ledRedPin, 1);
       delay(1000);
+
+      skipthisstep:
       cardUID="";
       digitalWrite(ledRedPin, LOW);
       digitalWrite(ledBluePin, LOW);
+      display.clearDisplay();
+      display.display();
     }
 }
