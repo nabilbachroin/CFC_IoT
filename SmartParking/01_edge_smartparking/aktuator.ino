@@ -41,12 +41,12 @@ void openGate()
       }
   }
 
-  void setup_LedButton()
-    {
-      pinMode(ledBluePin, OUTPUT);
-      pinMode(ledRedPin, OUTPUT);
-      digitalWrite(ledRedPin, LOW);
-      digitalWrite(ledBluePin, LOW);
-      pinMode(buttonGreen, INPUT_PULLUP);
-      pinMode(buttonRed, INPUT_PULLUP);
-    }
+void setup_LedButton()
+  {
+    pinMode(ledBluePin, OUTPUT);
+    pinMode(ledRedPin, OUTPUT);
+    digitalWrite(ledRedPin, LOW);
+    digitalWrite(ledBluePin, LOW);
+    pinMode(buttonGreen, INPUT_PULLUP);
+    pinMode(buttonRed, INPUT_PULLUP);
+  }

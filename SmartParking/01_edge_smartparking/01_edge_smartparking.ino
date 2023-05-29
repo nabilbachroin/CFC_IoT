@@ -20,6 +20,9 @@ const int ledBluePin = 33;
 const int ledRedPin = 32;
 const int buttonGreen = 34;
 const int buttonRed = 35;
+const int relay = 27;
+const int led_online = 14;
+const int led_offline = 12;
  
 MFRC522 rfid(SS_PIN, RST_PIN);
 Adafruit_SSD1306 display(128, 64, &Wire, -1);
