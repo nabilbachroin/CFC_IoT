@@ -14,6 +14,7 @@
 #define RST_PIN 15
 #define servoPin 25
 #define proximitySensor 26
+#define MAX_CARDS 50
 const int SDA_PIN = 21;
 const int SCL_PIN = 22;
 const int ledBluePin = 33;
@@ -23,6 +24,7 @@ const int buttonRed = 35;
 const int relay = 27;
 const int led_online = 14;
 const int led_offline = 12;
+const int parkingFee = 10;
  
 MFRC522 rfid(SS_PIN, RST_PIN);
 Adafruit_SSD1306 display(128, 64, &Wire, -1);
@@ -31,6 +33,26 @@ Servo gateServo;
 MFRC522::MIFARE_Key key; 
 byte nuidPICC[4];
 String cardUID;
+
+struct CardData {
+  String UID;
+  String name;
+  String status;
+  int balance;
+};
+CardData cardDatabase[MAX_CARDS];
+int cardCount = 0;
+
+CardData* findCard(String UID) 
+  {
+    for (int i = 0; i < cardCount; i++) {
+      if (cardDatabase[i].UID == UID) {
+        return &cardDatabase[i]; // back to card
+      }
+    }
+
+    return NULL; // if card not finding
+  }
 
 void setupDisplay();
 void setup_LedButton();
@@ -64,36 +86,38 @@ void setup() {
       key.keyByte[i] = 0xFF;
     }
   playSpeaker("system_starting.mp3");
-  // playSpeaker("Welcome-pleaseenter.mp3");
-  // playSpeaker("Sorry-parklot_full.mp3");
-  // playSpeaker("Thankyou-becareful_otr.mp3");
-  // test read sd card
-  readFile(SD, "/status_and_balance.txt");
-  readFile(SD, "/registered.txt");
+  // readFile(SD, "/status_and_balance.txt");
+  // readFile(SD, "/registered.txt");
+  readDatabase(SD, "/registered.txt", "/status_and_balance.txt");
 }
  
 void loop() {
-  //TEST RFID
+  // //TEST RFID
   readRFID();
   if (cardUID != "") 
     {
       Serial.println(cardUID); 
-      if (cardUID == "90a44c26") 
-        {
-          Serial.println("Oke,lanjut");
-          digitalWrite(ledBluePin, 1);
-          playSpeaker("Welcome-pleaseenter.mp3");
-          openGate();
-        }
+      CardData* card = findCard(cardUID);
+      if (card != NULL) 
+      {
+        Serial.println("Oke, lanjut");
+        display.clearDisplay();
+        display.setCursor(0, 0);
+        display.println("Welcome, " + card->name);
+        display.display();
+        digitalWrite(ledBluePin, 1);
+        playSpeaker("Welcome-pleaseenter.mp3");
+        openGate();
+        card->balance -= parkingFee;
+      }
       else digitalWrite(ledRedPin, 1);
       delay(1000);
       cardUID="";
       digitalWrite(ledRedPin, LOW);
       digitalWrite(ledBluePin, LOW);
+      writeDatabase(SD, "/registered.txt", "/status_and_balance.txt");
     }
-  if(digitalRead(buttonGreen)==0) {Serial.println("Button Green Pressed"); delay(333);}
-  if(digitalRead(buttonRed)==0) {Serial.println("Button Red Pressed"); delay(333);}
 
-  //TEST PROXIMITY SENSOR
-  //Serial.println(digitalRead(proximitySensor));
+  // //TEST PROXIMITY SENSOR
+  // //Serial.println(digitalRead(proximitySensor));
 }
