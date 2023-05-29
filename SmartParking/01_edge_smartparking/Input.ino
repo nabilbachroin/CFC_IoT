@@ -72,14 +72,14 @@ void writeDatabase(fs::FS &fs, const char * registeredPath, const char * statusP
     // write registered.txt
     File registeredFile = fs.open(registeredPath, FILE_WRITE);
     for(int i = 0; i < cardCount; i++) {
-      registeredFile.println(cardDatabase[i].UID + " @" + cardDatabase[i].name); // Menambahkan spasi sebelum '@'
+      registeredFile.println(cardDatabase[i].UID + " @" + cardDatabase[i].name);
     }
     registeredFile.close();
 
     // write status_and_balance.txt
     File statusFile = fs.open(statusPath, FILE_WRITE);
     for(int i = 0; i < cardCount; i++) {
-      statusFile.println(cardDatabase[i].UID + " @" + cardDatabase[i].status + " $" + String(cardDatabase[i].balance)); // Menambahkan spasi sebelum '@' dan '$'
+      statusFile.println(cardDatabase[i].UID + " @" + cardDatabase[i].status + " $" + String(cardDatabase[i].balance));
     }
     statusFile.close();
   }

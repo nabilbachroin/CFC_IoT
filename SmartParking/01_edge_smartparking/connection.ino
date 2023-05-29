@@ -1,0 +1,4 @@
+void updateParkingSlotsToAWS(int availableSlots) 
+  {
+    // 
+  }
