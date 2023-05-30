@@ -20,7 +20,7 @@ void readRFID()
 //  The findCard and addCard functions are used to manipulate in-memory data structures 
 //  because the Arduino IDE does not support all standard C++ features
 
-void readDatabase(fs::FS &fs, const char * registeredPath, const char * statusPath) 
+void readDatabase(fs::FS &fs, const char * registeredPath, const char * statusPath, const char * slotPath) 
   {
     // read registered.txt
     File registeredFile = fs.open(registeredPath);
@@ -58,6 +58,19 @@ void readDatabase(fs::FS &fs, const char * registeredPath, const char * statusPa
         i++;
       }
     statusFile.close();
+
+    // read availableSlots.txt
+    File slotFile = fs.open(slotPath);
+    if(slotFile.available()) 
+      {
+        String line = slotFile.readStringUntil('%');
+        line.trim();
+        String parkingSlots = line.substring(line.indexOf('@') + 1, line.indexOf('&') - 1);
+        String electricChargingSlots = line.substring(line.indexOf('&') + 1, line.indexOf('%'));
+        slotData.parkingSlots = parkingSlots.toInt();
+        slotData.electricChargingSlots = electricChargingSlots.toInt();
+      }
+    slotFile.close();
   }
 
 void addCard(String UID, String name, String status, int balance) 
@@ -74,35 +87,26 @@ void addCard(String UID, String name, String status, int balance)
     cardCount++;
   }
   
-void writeDatabase(fs::FS &fs, const char * registeredPath, const char * statusPath) 
+void writeDatabase(fs::FS &fs, const char * registeredPath, const char * statusPath, const char * slotPath) 
   {
     // write registered.txt
     File registeredFile = fs.open(registeredPath, FILE_WRITE);
-    for(int i = 0; i < cardCount; i++) {
-      registeredFile.println("#" + cardDatabase[i].UID + " @" + cardDatabase[i].name + "%");
-    }
+    for(int i = 0; i < cardCount; i++) 
+      {
+        registeredFile.println("#" + cardDatabase[i].UID + " @" + cardDatabase[i].name + "%");
+      }
     registeredFile.close();
 
     // write status_and_balance.txt
     File statusFile = fs.open(statusPath, FILE_WRITE);
-    for(int i = 0; i < cardCount; i++) {
-      statusFile.println("#" + cardDatabase[i].UID + " @" + cardDatabase[i].status + " $" + String(cardDatabase[i].balance) + "%");
-    }
+    for(int i = 0; i < cardCount; i++) 
+      {
+        statusFile.println("#" + cardDatabase[i].UID + " @" + cardDatabase[i].status + " $" + String(cardDatabase[i].balance) + "%");
+      }
     statusFile.close();
-  }
 
-
-void readFile(fs::FS &fs, const char * path)
-  {
-    Serial.printf("Reading file: %s\n", path);
-    File file = fs.open(path);
-    if(!file){
-        Serial.println("Failed to open file for reading");
-        return;
-    }
-    Serial.println("File Content:");
-    while(file.available()){
-        Serial.write(file.read());
-    }
-    file.close();
+    // write availableSlots.txt
+    File slotFile = fs.open(slotPath, FILE_WRITE);
+    slotFile.println("@" + String(slotData.parkingSlots) + " &" + String(slotData.electricChargingSlots) + "%");
+    slotFile.close();
   }

@@ -40,15 +40,21 @@ MFRC522::MIFARE_Key key;
 byte nuidPICC[4];
 String cardUID;
 
-struct CardData {
-  String UID;
-  String name;
-  String status;
-  int balance;
-};
+struct CardData 
+  {
+    String UID;
+    String name;
+    String status;
+    int balance;
+  };
 CardData cardDatabase[MAX_CARDS];
 int cardCount = 0;
-
+struct SlotData 
+  {
+    int parkingSlots;
+    int electricChargingSlots;
+  };
+SlotData slotData;
 CardData* findCard(String UID) 
   {
     for (int i = 0; i < cardCount; i++) {
@@ -58,11 +64,6 @@ CardData* findCard(String UID)
     }
     return NULL; // if card not finding
   }
-
-const int totalParkingSlots = 5;
-int availableParkingSlots = totalParkingSlots;
-const int electricChargingSlots = 1;
-int availableElectricChargingSlots = electricChargingSlots;
 
 void setupDisplay();
 void setup_LedButton();
@@ -96,7 +97,7 @@ void setup() {
       key.keyByte[i] = 0xFF;
     }
   playSpeaker("system_starting.mp3");
-  readDatabase(SD, "/registered.txt", "/status_and_balance.txt");
+  readDatabase(SD, "/registered.txt", "/status_and_balance.txt", "/availableSlots.txt");
 }
  
 void loop() {
@@ -105,10 +106,10 @@ void loop() {
   display.println("Smart Parking System");
   display.println("CFC-IoT Class");
   display.println();
-  display.println("Avlble Parking Slots=");
-  display.println(availableParkingSlots);
-  display.println("Elctrc Chrging Slots=");
-  display.println(availableElectricChargingSlots);
+  display.print("Parking Slots = ");
+  display.println(slotData.parkingSlots);
+  display.print("Elctrc Slots = ");
+  display.println(slotData.electricChargingSlots);
   display.display();
   readRFID();
   if (cardUID != "") 
@@ -118,7 +119,7 @@ void loop() {
       if (card != NULL) 
         {
           bool useElectricChargingSlot = false;
-          if(card->status == "outside" && availableParkingSlots <= 0 && availableElectricChargingSlots <= 0)
+          if(card->status == "outside" && slotData.parkingSlots <= 0 && slotData.electricChargingSlots <= 0)
             {
               Serial.println(card->name + " Can not Enter, because parking slot is full");
               display.clearDisplay();
@@ -130,9 +131,9 @@ void loop() {
               playSpeaker("Sorry-parklot_full.mp3");
               goto skipthisstep;
             }
-          else if(card->status == "outside" && (availableParkingSlots>0 || availableElectricChargingSlots>0)) 
+          else if(card->status == "outside" && (slotData.parkingSlots>0 || slotData.electricChargingSlots>0)) 
             {
-              if(availableElectricChargingSlots>0) 
+              if(slotData.electricChargingSlots>0) 
                 {
                   display.clearDisplay();
                   display.setCursor(0, 0);
@@ -154,11 +155,11 @@ void loop() {
                   display.println("Welcome, " + card->name);
                   display.println(card->name + " using electric charging slot");
                   display.println("Balance: " + String(card->balance) + " - " + electricParkingFee);
-                  availableElectricChargingSlots--;
+                  slotData.electricChargingSlots--;
                   card->status = "inside";
                   card->balance -= electricParkingFee;
                 }
-              else if(useElectricChargingSlot==false && availableParkingSlots>0)
+              else if(useElectricChargingSlot==false && slotData.parkingSlots>0)
                 {
                   Serial.println(card->name + " didn't using electric charging slot");
                   display.clearDisplay();
@@ -166,11 +167,11 @@ void loop() {
                   display.println("Welcome, " + card->name);
                   display.println(card->name + " didn't using electric charging slot");
                   display.println("Balance: " + String(card->balance) + " - " + parkingFee);
-                  availableParkingSlots--;
+                  slotData.parkingSlots--;
                   card->status = "inside";
                   card->balance -= parkingFee;
                 }
-              else if(useElectricChargingSlot==false && availableParkingSlots<=0)
+              else if(useElectricChargingSlot==false && slotData.parkingSlots<=0)
                 {
                   Serial.println(card->name + " The avlble parking slot only for electric park");
                   Serial.println("asl " + card->name + " to using the slot");
@@ -232,11 +233,11 @@ void loop() {
               digitalWrite(ledBluePin, 1);
               playSpeaker("Thankyou-becareful_otr.mp3");
               openGate();
-              if(availableElectricChargingSlots<=0) availableElectricChargingSlots++;
-              else availableParkingSlots++;
+              if(slotData.electricChargingSlots<=0) slotData.electricChargingSlots++;
+              else slotData.parkingSlots++;
               card->status = "outside";
             }
-          writeDatabase(SD, "/registered.txt", "/status_and_balance.txt");
+          writeDatabase(SD, "/registered.txt", "/status_and_balance.txt", "/availableSlots.txt");
         }
       else digitalWrite(ledRedPin, 1);
       delay(1000);
