@@ -30,6 +30,7 @@ void readDatabase(fs::FS &fs, const char * registeredPath, const char * statusPa
         String line = registeredFile.readStringUntil('%');
         line.trim(); 
         String uid = line.substring(line.indexOf('#') + 1, line.indexOf('@') - 1);
+        uid.trim();
         String name = line.substring(line.indexOf('@') + 1, line.indexOf('%') - 1);
         name.trim();
         cardDatabase[cardCount].UID = uid;
@@ -47,7 +48,9 @@ void readDatabase(fs::FS &fs, const char * registeredPath, const char * statusPa
         String line = statusFile.readStringUntil('%');
         line.trim();
         String uid = line.substring(line.indexOf('#') + 1, line.indexOf('@') - 1);
+        uid.trim();
         String status = line.substring(line.indexOf('@') + 1, line.indexOf('$') - 1);
+        status.trim();
         int balance = line.substring(line.indexOf('$') + 1, line.indexOf('%') - 1).toInt();
         if (cardDatabase[i].UID == uid) 
           {
@@ -79,7 +82,6 @@ void addCard(String UID, String name, String status, int balance)
       Serial.println("Database is full, can not add new card");
       return;
     }
-
     cardDatabase[cardCount].UID = UID;
     cardDatabase[cardCount].name = name;
     cardDatabase[cardCount].status = status;
@@ -89,6 +91,7 @@ void addCard(String UID, String name, String status, int balance)
   
 void writeDatabase(fs::FS &fs, const char * registeredPath, const char * statusPath, const char * slotPath) 
   {
+    Serial.println(cardCount);
     // write registered.txt
     File registeredFile = fs.open(registeredPath, FILE_WRITE);
     for(int i = 0; i < cardCount; i++) 

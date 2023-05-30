@@ -1,6 +1,8 @@
 /* Need to test:
 - When the available parking slot is only for electric charging slot,
 - if still want to enter, so the fee is like using electric charging slot
+
+- if the balance <0 (not yet)
 */
 
 #include <FS.h>
@@ -239,8 +241,48 @@ void loop() {
             }
           writeDatabase(SD, "/registered.txt", "/status_and_balance.txt", "/availableSlots.txt");
         }
-      else digitalWrite(ledRedPin, 1);
-      delay(1000);
+      else 
+        {
+          digitalWrite(ledRedPin, 1);
+          delay(500);
+          Serial.println("The card is not registered");
+          display.clearDisplay();
+          display.setCursor(0, 0);
+          display.println("Your card is not registered");
+          display.println("Do you want to register?");
+          display.println("-push the button-");
+          display.display();
+          while(1)
+            {
+              if(digitalRead(buttonGreen)==0)
+                {
+                  String nm="no-name";
+                  int blnc=0;
+                  addCard(cardUID, nm, "outside", blnc);
+                  Serial.println("Thank you for register the card");
+                  display.clearDisplay();
+                  display.setCursor(0, 0);
+                  display.println("Thank you for register your card");
+                  display.println("Your card name=" + nm);
+                  display.println("Your card balance=" + blnc);
+                  display.display();
+                  delay(5000);
+                  writeDatabase(SD, "/registered.txt", "/status_and_balance.txt", "/availableSlots.txt");
+                  break;
+                }
+              else if(digitalRead(buttonRed)==0) 
+                {
+                  Serial.println("He/She didn't register the card");
+                  display.clearDisplay();
+                  display.setCursor(0, 0);
+                  display.println("Okay, You didn't register your card");
+                  display.println("Thank you");
+                  display.display();
+                  delay(2000);
+                  break;
+                }
+            }
+        }
 
       skipthisstep:
       cardUID="";
