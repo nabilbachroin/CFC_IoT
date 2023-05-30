@@ -56,7 +56,6 @@ CardData* findCard(String UID)
         return &cardDatabase[i]; // back to card
       }
     }
-
     return NULL; // if card not finding
   }
 
@@ -131,12 +130,12 @@ void loop() {
               playSpeaker("Sorry-parklot_full.mp3");
               goto skipthisstep;
             }
-          if(card->status == "outside" && (availableParkingSlots>0 || availableElectricChargingSlots>0)) 
+          else if(card->status == "outside" && (availableParkingSlots>0 || availableElectricChargingSlots>0)) 
             {
-              display.clearDisplay();
-              display.setCursor(0, 0);
               if(availableElectricChargingSlots>0) 
                 {
+                  display.clearDisplay();
+                  display.setCursor(0, 0);
                   display.println("Do you want to use electric charging slot?");
                   display.println("-push the button-");
                   display.display();
@@ -150,6 +149,8 @@ void loop() {
                 {
                   usingelectricslot:
                   Serial.println(card->name + " using electric charging slot");
+                  display.clearDisplay();
+                  display.setCursor(0, 0);
                   display.println("Welcome, " + card->name);
                   display.println(card->name + " using electric charging slot");
                   display.println("Balance: " + String(card->balance) + " - " + electricParkingFee);
@@ -160,6 +161,8 @@ void loop() {
               else if(useElectricChargingSlot==false && availableParkingSlots>0)
                 {
                   Serial.println(card->name + " didn't using electric charging slot");
+                  display.clearDisplay();
+                  display.setCursor(0, 0);
                   display.println("Welcome, " + card->name);
                   display.println(card->name + " didn't using electric charging slot");
                   display.println("Balance: " + String(card->balance) + " - " + parkingFee);
@@ -171,6 +174,8 @@ void loop() {
                 {
                   Serial.println(card->name + " The avlble parking slot only for electric park");
                   Serial.println("asl " + card->name + " to using the slot");
+                  display.clearDisplay();
+                  display.setCursor(0, 0);
                   display.println("Hello " + card->name + ", The avlble parking slot only for electric park");
                   display.println("Do you want to use electric charging slot? The Fee is " + electricParkingFee);
                   display.println("-push the button-");
@@ -197,7 +202,7 @@ void loop() {
             }
           else if(card->status == "inside") 
             {
-              Serial.println(card->name + "Ask for Go Away?");
+              Serial.println("Ask to " + card->name +  " for Go Away?");
               display.clearDisplay();
               display.setCursor(0, 0);
               display.println("Your car is currently inside, " + card->name);
@@ -232,7 +237,6 @@ void loop() {
               card->status = "outside";
             }
           writeDatabase(SD, "/registered.txt", "/status_and_balance.txt");
-          updateParkingSlotsToAWS(availableParkingSlots);
         }
       else digitalWrite(ledRedPin, 1);
       delay(1000);

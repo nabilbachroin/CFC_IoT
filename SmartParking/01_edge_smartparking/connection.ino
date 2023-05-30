@@ -1,4 +1,0 @@
-void updateParkingSlotsToAWS(int availableSlots) 
-  {
-    // 
-  }

@@ -1,0 +1,5 @@
+There are two folders in this file, namely the "A" and "B" folders. Specifically for the Arduino code, please try/use the Arduino code in the "A" folder first.
+
+If you use the arduino code in the "A" folder and you get an error message like this: 
+> 'HTTPClient::begin' declared with attribute error: obsolete API, use ::begin(WiFiClient, url) <
+then the solution is to use the arduino code in the "B" folder.

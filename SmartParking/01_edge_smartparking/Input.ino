@@ -20,6 +20,46 @@ void readRFID()
 //  The findCard and addCard functions are used to manipulate in-memory data structures 
 //  because the Arduino IDE does not support all standard C++ features
 
+void readDatabase(fs::FS &fs, const char * registeredPath, const char * statusPath) 
+  {
+    // read registered.txt
+    File registeredFile = fs.open(registeredPath);
+    cardCount = 0; 
+    while(registeredFile.available()) 
+      {
+        String line = registeredFile.readStringUntil('%');
+        line.trim(); 
+        String uid = line.substring(line.indexOf('#') + 1, line.indexOf('@') - 1);
+        String name = line.substring(line.indexOf('@') + 1, line.indexOf('%') - 1);
+        name.trim();
+        cardDatabase[cardCount].UID = uid;
+        cardDatabase[cardCount].name = name;
+        Serial.println("Read card data: " + uid + " @" + name);
+        cardCount++;
+      }
+    registeredFile.close();
+
+    // read status_and_balance.txt
+    File statusFile = fs.open(statusPath);
+    int i = 0;
+    while(statusFile.available()) 
+      {
+        String line = statusFile.readStringUntil('%');
+        line.trim();
+        String uid = line.substring(line.indexOf('#') + 1, line.indexOf('@') - 1);
+        String status = line.substring(line.indexOf('@') + 1, line.indexOf('$') - 1);
+        int balance = line.substring(line.indexOf('$') + 1, line.indexOf('%') - 1).toInt();
+        if (cardDatabase[i].UID == uid) 
+          {
+            cardDatabase[i].status = status;
+            cardDatabase[i].balance = balance;
+          }
+        Serial.println("Read status data: " + uid + " @" + status + " $" + String(balance));
+        i++;
+      }
+    statusFile.close();
+  }
+
 void addCard(String UID, String name, String status, int balance) 
   {
     if (cardCount >= MAX_CARDS) {
@@ -33,56 +73,24 @@ void addCard(String UID, String name, String status, int balance)
     cardDatabase[cardCount].balance = balance;
     cardCount++;
   }
-
-
-void readDatabase(fs::FS &fs, const char * registeredPath, const char * statusPath) 
-{
-  // read registered.txt
-  File registeredFile = fs.open(registeredPath);
-  cardCount = 0; // reset jumlah kartu
-  while(registeredFile.available()) {
-    String line = registeredFile.readStringUntil('\n');
-    String uid = line.substring(0, line.indexOf('@') - 1);
-    String name = line.substring(line.indexOf('@') + 1);
-    cardDatabase[cardCount].UID = uid;
-    cardDatabase[cardCount].name = name;
-    cardCount++;
-  }
-  registeredFile.close();
-
-  // read status_and_balance.txt
-  File statusFile = fs.open(statusPath);
-  int i = 0;
-  while(statusFile.available()) {
-    String line = statusFile.readStringUntil('\n');
-    String uid = line.substring(0, line.indexOf('@') - 1);
-    String status = line.substring(line.indexOf('@') + 1, line.indexOf('$') - 1);
-    int balance = line.substring(line.indexOf('$') + 1).toInt();
-    if (cardDatabase[i].UID == uid) {
-      cardDatabase[i].status = status;
-      cardDatabase[i].balance = balance;
-    }
-    i++;
-  }
-  statusFile.close();
-}
-
+  
 void writeDatabase(fs::FS &fs, const char * registeredPath, const char * statusPath) 
   {
     // write registered.txt
     File registeredFile = fs.open(registeredPath, FILE_WRITE);
     for(int i = 0; i < cardCount; i++) {
-      registeredFile.println(cardDatabase[i].UID + " @" + cardDatabase[i].name);
+      registeredFile.println("#" + cardDatabase[i].UID + " @" + cardDatabase[i].name + "%");
     }
     registeredFile.close();
 
     // write status_and_balance.txt
     File statusFile = fs.open(statusPath, FILE_WRITE);
     for(int i = 0; i < cardCount; i++) {
-      statusFile.println(cardDatabase[i].UID + " @" + cardDatabase[i].status + " $" + String(cardDatabase[i].balance));
+      statusFile.println("#" + cardDatabase[i].UID + " @" + cardDatabase[i].status + " $" + String(cardDatabase[i].balance) + "%");
     }
     statusFile.close();
   }
+
 
 void readFile(fs::FS &fs, const char * path)
   {
