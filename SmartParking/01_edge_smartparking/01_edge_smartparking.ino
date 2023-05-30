@@ -99,7 +99,7 @@ void setup() {
       key.keyByte[i] = 0xFF;
     }
   playSpeaker("system_starting.mp3");
-  readDatabase(SD, "/registered.txt", "/status_and_balance.txt", "/availableSlots.txt");
+  readDatabase(SD, "/registered.txt", "/status_and_balance.txt", "/availableSlots.txt", "/cardCount.txt");
 }
  
 void loop() {

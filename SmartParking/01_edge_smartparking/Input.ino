@@ -110,6 +110,6 @@ void writeDatabase(fs::FS &fs, const char * registeredPath, const char * statusP
 
     // write availableSlots.txt
     File slotFile = fs.open(slotPath, FILE_WRITE);
-    slotFile.println("@" + String(slotData.parkingSlots) + " &" + String(slotData.electricChargingSlots) + "%");
+    slotFile.print("@" + String(slotData.parkingSlots) + " &" + String(slotData.electricChargingSlots) + "%");
     slotFile.close();
   }
