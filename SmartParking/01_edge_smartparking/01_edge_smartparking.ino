@@ -57,15 +57,6 @@ struct SlotData
     int electricChargingSlots;
   };
 SlotData slotData;
-CardData* findCard(String UID) 
-  {
-    for (int i = 0; i < cardCount; i++) {
-      if (cardDatabase[i].UID == UID) {
-        return &cardDatabase[i]; // back to card
-      }
-    }
-    return NULL; // if card not finding
-  }
 
 void setupDisplay();
 void setup_LedButton();
@@ -99,7 +90,7 @@ void setup() {
       key.keyByte[i] = 0xFF;
     }
   playSpeaker("system_starting.mp3");
-  readDatabase(SD, "/registered.txt", "/status_and_balance.txt", "/availableSlots.txt", "/cardCount.txt");
+  readDatabase(SD, "/registered.txt", "/status_and_balance.txt", "/availableSlots.txt");
 }
  
 void loop() {

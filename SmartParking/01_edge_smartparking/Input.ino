@@ -20,6 +20,16 @@ void readRFID()
 //  The findCard and addCard functions are used to manipulate in-memory data structures 
 //  because the Arduino IDE does not support all standard C++ features
 
+CardData* findCard(String UID) 
+  {
+    for (int i = 0; i < cardCount; i++) {
+      if (cardDatabase[i].UID == UID) {
+        return &cardDatabase[i]; // back to card
+      }
+    }
+    return NULL; // if card not finding
+  }
+
 void readDatabase(fs::FS &fs, const char * registeredPath, const char * statusPath, const char * slotPath) 
   {
     // read registered.txt
@@ -91,12 +101,12 @@ void addCard(String UID, String name, String status, int balance)
   
 void writeDatabase(fs::FS &fs, const char * registeredPath, const char * statusPath, const char * slotPath) 
   {
-    Serial.println(cardCount);
     // write registered.txt
     File registeredFile = fs.open(registeredPath, FILE_WRITE);
     for(int i = 0; i < cardCount; i++) 
       {
-        registeredFile.println("#" + cardDatabase[i].UID + " @" + cardDatabase[i].name + "%");
+        if(i==cardCount-1 && i!=0) registeredFile.print("#" + cardDatabase[i].UID + " @" + cardDatabase[i].name + "%");
+        else registeredFile.println("#" + cardDatabase[i].UID + " @" + cardDatabase[i].name + "%");
       }
     registeredFile.close();
 
@@ -104,7 +114,8 @@ void writeDatabase(fs::FS &fs, const char * registeredPath, const char * statusP
     File statusFile = fs.open(statusPath, FILE_WRITE);
     for(int i = 0; i < cardCount; i++) 
       {
-        statusFile.println("#" + cardDatabase[i].UID + " @" + cardDatabase[i].status + " $" + String(cardDatabase[i].balance) + "%");
+        if(i==cardCount-1 && i!=0) statusFile.print("#" + cardDatabase[i].UID + " @" + cardDatabase[i].status + " $" + String(cardDatabase[i].balance) + "%");
+        else statusFile.println("#" + cardDatabase[i].UID + " @" + cardDatabase[i].status + " $" + String(cardDatabase[i].balance) + "%");
       }
     statusFile.close();
 
