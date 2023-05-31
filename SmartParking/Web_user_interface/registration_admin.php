@@ -94,9 +94,9 @@
 	
 		<h2 align="center">Smart Parking</h2>
 		<ul class="topnav">
-			<li><a href="home.php">Home</a></li>
-			<li><a href="user data.php">User Data</a></li>
-			<li><a class="active" href="registration.php">Registration</a></li>
+			<li><a href="home1.php">Home</a></li>
+			<li><a href="user data1.php">User Data</a></li>
+			<li><a class="active" href="registration_admin.php">Registration</a></li>
 			<li><a href="parking.php">Parking free</a></li>
 		</ul>
 		
@@ -109,9 +109,9 @@
 				<br>
 				<form class="form-horizontal" action="insertDB.php" method="post" >
 					<div class="control-group">
-						<label class="control-label">username</label>
+						<label class="control-label">Username</label>
 						<div class="controls">
-							<input name="username" type="text" placeholder="" value="<?php echo($_SESSION['username']);?>" readonly>
+							<input id="div_refresh" name="username" type="text" placeholder="" required>
 						</div>
 					</div>
 					<div class="control-group">

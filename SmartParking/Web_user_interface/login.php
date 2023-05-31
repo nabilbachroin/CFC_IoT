@@ -38,7 +38,7 @@
     // Validate credentials
     if (empty($username_err) && empty($password_err)) {
       // Prepare a select statement
-      $sql = 'SELECT id_session, username, password FROM table_rfid WHERE username = ?';
+      $sql = 'SELECT id_session, username, password, usertype FROM table_rfid WHERE username = ?';
 
       if ($stmt = $mysql_db->prepare($sql)) {
 
@@ -57,21 +57,33 @@
           // Check if username exists. Verify user exists then verify
           if ($stmt->num_rows == 1) {
             // Bind result into variables
-            $stmt->bind_result($id_session, $username, $hashed_password);
+            $stmt->bind_result($id_session, $username, $hashed_password, $usertype);
 
             if ($stmt->fetch()) {
               if (password_verify($password, $hashed_password)) {
+				if ($usertype == "user") {
+					// Start a new session
+					session_start();
 
-                // Start a new session
-                session_start();
+					// Store data in sessions
+					$_SESSION['loggedin'] = true;
+					$_SESSION['id_session'] = $id_session;
+					$_SESSION['username'] = $username;
 
-                // Store data in sessions
-                $_SESSION['loggedin'] = true;
-                $_SESSION['id_session'] = $id_session;
-                $_SESSION['username'] = $username;
+					// Redirect to user to page
+					header('location: home.php');
+				} else {
+					// Start a new session
+					session_start();
 
-                // Redirect to user to page
-                header('location: home.php');
+					// Store data in sessions
+					$_SESSION['loggedin'] = true;
+					$_SESSION['id_session'] = $id_session;
+					$_SESSION['username'] = $username;
+
+					// Redirect to user to page
+					header('location: home1.php');
+					}
               } else {
                 // Display an error for passord mismatch
                 $password_err = 'Invalid password';

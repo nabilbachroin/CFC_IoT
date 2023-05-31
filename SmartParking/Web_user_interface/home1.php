@@ -32,7 +32,7 @@
 		<main>
 			<section class="container wrapper">
 				<div class="page-header">
-					<h2 class="display-5">Welcome home <?php echo $_SESSION['username']; ?></h2>
+					<h2 class="display-5">Welcome home Creator <?php echo $_SESSION['username']; ?></h2>
 				</div>
 
 				<a href="password_reset.php" class="btn btn-block btn-outline-warning">Reset Password</a>
@@ -89,16 +89,16 @@
 		}
 		</style>
 		
-		<title>Home : Smart Parking</title>
+		<title>Home : Smart Parking Admin</title>
 	</head>
 	
 	<body>
 		<h2 style="text-align:center">Smart Parking</h2>
 		<ul class="topnav">
 			<li  class="username"><span><?php echo($_SESSION['username']); ?></span></li>
-			<li><a class="active" href="home.php">Home</a></li>
-			<li><a href="user data.php">User Data</a></li>
-			<li><a href="registration.php">Registration</a></li>
+			<li><a class="active" href="home1.php">Home</a></li>
+			<li><a href="user data1.php">User Data</a></li>
+			<li><a href="registration_admin.php">Registration</a></li>
 			<li><a href="parking.php">Parking Free</a></li>
 		</ul>
 		<br>

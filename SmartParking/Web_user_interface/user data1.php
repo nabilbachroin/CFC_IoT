@@ -57,13 +57,22 @@
 		}
 		
 		.table {
-			margin: auto;
+			margin-top: auto;
+			margin-bottom: 20px;
+			margin-left: auto;
+			margin-right: auto;
 			width: 90%;
 		}
 		
 		thead {
 			color: #FFFFFF
 		}
+		td {
+			 vertical-align: 50px;
+			text-align: center;
+		}
+		
+		.button2 {background-color: #008CBA;} /* Blue */
 		</style>
 		
 		<title>User Data : Smart Parking</title>
@@ -72,9 +81,9 @@
 	<body>
 		<h2>Smart Parking</h2>
 		<ul class="topnav">
-			<li><a href="home.php">Home</a></li>
-			<li><a class="active" href="user data.php">User Data</a></li>
-			<li><a href="registration.php">Registration</a></li>
+			<li><a href="home1.php">Home</a></li>
+			<li><a class="active" href="user data1s.php">User Data</a></li>
+			<li><a href="registration_admin.php">Registration</a></li>
 			<li><a href="parking.php">Parking Free</a></li>
 		</ul>
 		<br>
@@ -99,13 +108,13 @@
 					<?php
 					 include 'database.php';
 					 $pdo = Database::connect();
-					 $sql = "SELECT * FROM table_rfid WHERE username = '{$_SESSION[ "username" ]}' ORDER BY name ASC";
+					 $sql = "SELECT * FROM table_rfid ORDER BY name ASC";
 					 foreach ($pdo->query($sql) as $row) {
 						 if($row['status']==1) {
-							 $status = 'Active';
+							 $status = '<a class="btn btn-success">Active</a>';
 						 }
 						 else{
-							 $status = "Deactive";
+							 $status = '<a class="btn btn-danger">Deactive</a>';
 						 }
 								echo '<tr>';
 								echo '<td>'. $row['name'] . '</td>';
@@ -117,12 +126,52 @@
 								echo ' ';
 								echo '<a class="btn btn-danger" href="user data delete page.php?id='.$row['id'].'">Delete</a>';
 								echo '</td>';
-								echo '<td>'. $status .'</td>';
+								echo '<td>'.$status.'</td>';
 								echo '</tr>';
 					 }
 					 Database::disconnect();
 					?>
 					</tbody>
+				</table>
+				<br>
+				<table class="table table-striped table-bordered">
+					<thead>
+						<tr bgcolor="$10a0c5" color="$FFFFFF">
+							<th>Number</th>
+							<th>Condition</th>
+							<th>Date</th>
+						</tr>
+						<tr>
+							<td style="color: #000000" margin : auto;>1</td>
+							<td><img src="car.jpg" alt="" style="width:55%;"></img></td>
+							<td style="color: #000000" margin : auto;>date</td>
+						</tr>
+						<tr>
+							<td style="color: #000000" margin : auto;>2</td>
+							<td><img src="car.jpg" alt="" style="width:55%;"></img></td>
+							<td style="color: #000000" margin : auto;>date</td>
+						</tr>
+						<tr>
+							<td style="color: #000000" margin : auto;>3</td>
+							<td><img src="car.jpg" alt="" style="width:55%;"></img></td>
+							<td style="color: #000000" margin : auto;>date</td>
+						</tr>
+						<tr>
+							<td style="color: #000000" margin : auto;>4</td>
+							<td><img src="car.jpg" alt="" style="width:55%;"></img></td>
+							<td style="color: #000000" margin : auto;>date</td>
+						</tr>
+						<tr>
+							<td style="color: #000000" margin : auto;>5</td>
+							<td><img src="car.jpg" alt="" style="width:55%;"></img></td>
+							<td style="color: #000000" margin : auto;>date</td>
+						</tr>
+						<tr>
+							<td style="color: #000000" margin : auto;>6</td>
+							<td><img src="car.jpg" alt="" style="width:55%;"></img></td>
+							<td style="color: #000000" margin : auto;>date</td>
+						</tr>
+					</thead>
 				</table>
 			</div>
 		</div> <!== /container ==>
