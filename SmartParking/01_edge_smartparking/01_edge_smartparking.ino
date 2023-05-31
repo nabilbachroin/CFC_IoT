@@ -1,13 +1,14 @@
 /* Need to test:
-- When the available parking slot is only for electric charging slot,
-- if still want to enter, so the fee is like using electric charging slot
+1. When the available parking slot is only for electric charging slot, if still want to enter, so the fee is like using electric charging slot
+2. electric on even the system is starting
+3. balance
+4. register
+5. if is there object when servo is working
+6. internet connection
 
 - [Me] Not finished yet:
-- if the balance <0
 - AWS
-- Wifi
-- Led online (ping google)
-- Relay
+
 - [My Friends]:
 - setting display
 - Buy for Bright Green Led
@@ -45,7 +46,7 @@ const int ledBluePin = 33;
 const int ledRedPin = 32;
 const int buttonGreen = 34;
 const int buttonRed = 35;
-const int relay = 27;
+const int relay = 27;  // 0 on, 1 off
 const int led_online = 14;
 const int led_offline = 12;
 const int parkingFee = 10;
@@ -150,7 +151,20 @@ void loop() {
       if (card != NULL) 
         {
           bool useElectricChargingSlot = false;
-          if(card->status == "outside" && slotData.parkingSlots <= 0 && slotData.electricChargingSlots <= 0)
+          if(card->balance <=0)
+            {
+              Serial.println(card->name + " Can not Enter, balance not enough");
+              display.clearDisplay();
+              display.setCursor(0, 0);
+              display.println("Hello, " + card->name);
+              display.println("Sorry, your balance is empty");
+              display.display();
+              digitalWrite(ledRedPin, 1);
+              //playSpeaker("Sorry-parklot_full.mp3");
+              delay(5000); // nanti delay hapus aja kalau udah ada suaranya
+              goto skipthisstep;
+            }
+          else if(card->status == "outside" && slotData.parkingSlots <= 0 && slotData.electricChargingSlots <= 0)
             {
               Serial.println(card->name + " Can not Enter, because parking slot is full");
               display.clearDisplay();

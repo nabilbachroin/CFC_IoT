@@ -84,6 +84,7 @@ void readDatabase(fs::FS &fs, const char * registeredPath, const char * statusPa
         slotData.electricChargingSlots = electricChargingSlots.toInt();
       }
     slotFile.close();
+    checkRelay();
   }
 
 void addCard(String UID, String name, String status, int balance) 
@@ -123,4 +124,5 @@ void writeDatabase(fs::FS &fs, const char * registeredPath, const char * statusP
     File slotFile = fs.open(slotPath, FILE_WRITE);
     slotFile.print("@" + String(slotData.parkingSlots) + " &" + String(slotData.electricChargingSlots) + "%");
     slotFile.close();
+    checkRelay();
   }

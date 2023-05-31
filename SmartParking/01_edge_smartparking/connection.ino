@@ -22,7 +22,7 @@ void checkConnection()
   else 
     {
     WiFi.begin(ssid, password);
-    for(int cn=0; cn<2000; cn++)
+    for(int cn=0; cn<1500; cn++)
       {
         if(WiFi.status() != WL_CONNECTED) 
           {
