@@ -2,7 +2,23 @@
 - When the available parking slot is only for electric charging slot,
 - if still want to enter, so the fee is like using electric charging slot
 
-- if the balance <0 (not yet)
+- [Me] Not finished yet:
+- if the balance <0
+- AWS
+- Wifi
+- Led online (ping google)
+- Relay
+- [My Friends]:
+- setting display
+- Buy for Bright Green Led
+
+- make mp3 file:
+- Sorry balance not enough
+- your card is not registered, do you want to register?
+- thank you for register your card
+- you are not register your card
+- etc
+
 */
 
 #include <FS.h>
@@ -15,6 +31,7 @@
 #include <Adafruit_SSD1306.h>
 #include <Arduino.h>
 #include <DFPlayerMini_Fast.h>
+#include <WiFi.h>
 
 #define SD_CS 13
 #define SS_PIN 5
@@ -61,6 +78,11 @@ SlotData slotData;
 void setupDisplay();
 void setup_LedButton();
 
+const char* ssid = "NabilBachroin";
+const char* password = "nabilganteng";
+const char* host = "google.com";
+unsigned long lastCheck = 0;
+
 void setup() { 
   Serial.begin(9600);
   SPI.begin();
@@ -91,9 +113,25 @@ void setup() {
     }
   playSpeaker("system_starting.mp3");
   readDatabase(SD, "/registered.txt", "/status_and_balance.txt", "/availableSlots.txt");
+
+  WiFi.begin(ssid, password);
+  delay(4000);
+  if(WiFi.status() == WL_CONNECTED)
+    {
+      Serial.println("");
+      Serial.println("WiFi connected");  
+      Serial.print("IP address: ");
+      Serial.println(WiFi.localIP());
+      Serial.println("================");
+    }
 }
  
 void loop() {
+  if (millis() - lastCheck >= 3000) 
+    {
+      checkConnection();
+      lastCheck = millis();
+    }
   display.clearDisplay();
   display.setCursor(0, 0);
   display.println("Smart Parking System");

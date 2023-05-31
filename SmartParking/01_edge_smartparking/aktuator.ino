@@ -47,6 +47,10 @@ void setup_LedButton()
     pinMode(ledRedPin, OUTPUT);
     digitalWrite(ledRedPin, LOW);
     digitalWrite(ledBluePin, LOW);
+    pinMode(led_online, OUTPUT);
+    pinMode(led_offline, OUTPUT);
+    digitalWrite(led_online, LOW);
+    digitalWrite(led_offline, LOW);
     pinMode(buttonGreen, INPUT_PULLUP);
     pinMode(buttonRed, INPUT_PULLUP);
   }
