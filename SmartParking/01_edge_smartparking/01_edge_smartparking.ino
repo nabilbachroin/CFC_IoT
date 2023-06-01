@@ -33,6 +33,9 @@
 #include <Arduino.h>
 #include <DFPlayerMini_Fast.h>
 #include <WiFi.h>
+#include <HTTPClient.h>
+#include <ESPAsyncWebServer.h>
+#include <ArduinoJson.h>
 
 #define SD_CS 13
 #define SS_PIN 5

@@ -85,6 +85,7 @@ void readDatabase(fs::FS &fs, const char * registeredPath, const char * statusPa
       }
     slotFile.close();
     checkRelay();
+    sendDataToServer();
   }
 
 void addCard(String UID, String name, String status, int balance) 
@@ -125,4 +126,5 @@ void writeDatabase(fs::FS &fs, const char * registeredPath, const char * statusP
     slotFile.print("@" + String(slotData.parkingSlots) + " &" + String(slotData.electricChargingSlots) + "%");
     slotFile.close();
     checkRelay();
+    sendDataToServer();
   }
