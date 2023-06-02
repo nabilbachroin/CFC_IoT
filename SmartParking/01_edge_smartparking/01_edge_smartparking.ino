@@ -116,10 +116,10 @@ void setup() {
       key.keyByte[i] = 0xFF;
     }
   playSpeaker("system_starting.mp3");
-  readDatabase(SD, "/registered.txt", "/status_and_balance.txt", "/availableSlots.txt");
 
   WiFi.begin(ssid, password);
   delay(4000);
+  readDatabase(SD, "/registered.txt", "/status_and_balance.txt", "/availableSlots.txt");
   if(WiFi.status() == WL_CONNECTED)
     {
       Serial.println("");
