@@ -5,6 +5,14 @@
 4. register
 5. if is there object when servo is working
 6. internet connection
+7. registrasion demo 
+  a. say that the data from local database esp, will be save on temporary table
+  b. before writing, we always clear the old data
+  c. after that, we check the new UID with 'no-name' from ESP32
+  d. compare with mySQL database
+  e. and then we change the name in temporary table with new name from user mySQL database
+  f. after that, send the data to the ESP32 to update local database
+8. 
 
 - [Me] Not finished yet:
 - AWS
@@ -128,6 +136,8 @@ void setup() {
       Serial.println(WiFi.localIP());
       Serial.println("================");
     }
+
+	qrcode(); delay(5000);
 }
  
 void loop() {
@@ -302,6 +312,7 @@ void loop() {
             {
               if(digitalRead(buttonGreen)==0)
                 {
+                  sendUID();
                   String nm="no-name";
                   int blnc=0;
                   addCard(cardUID, nm, "outside", blnc);
