@@ -72,6 +72,7 @@ Servo gateServo;
 MFRC522::MIFARE_Key key; 
 byte nuidPICC[4];
 String cardUID;
+bool after_disconnect=false;
 
 struct CardData 
   {
@@ -180,6 +181,12 @@ void loop() {
                 {
                   if(digitalRead(buttonGreen)==0) 
                     {
+                      digitalWrite(led_online, LOW);
+                      digitalWrite(led_offline, HIGH);
+                      after_disconnect=true;
+
+                      get_update_from_temporary_register_table();
+                      writeDatabase(SD, "/registered.txt", "/status_and_balance.txt", "/availableSlots.txt");
                       Serial.println("He already finish the registration in website,");
                       Serial.println("But we still disconnect with internet,");
                       Serial.println("So my local database still not update yet.");
@@ -189,12 +196,32 @@ void loop() {
                       display.println("My database still not update,");
                       display.println("Please wait until my Online_led indicator is turn on.");
                       display.display();
+                      delay(5500);
+
+                      checkConnection();
                       goto skipthisstep;
                     }
                   else if(digitalRead(buttonRed)==0) 
                     {
+                      backhere:
                       show_qrcode();
-                      for(int r=0; r<=3000; r++) sendUID();
+                      for(int r=0; r<=33; r++) sendUID();
+
+                      display.setCursor(0, 0);
+                      display.println("Have you finished fill in the form on the website?");
+                      display.println("-push the button-");
+                      display.display();
+                      while(1)
+                        {
+                          if(digitalRead(buttonGreen)==0) break;
+                          else if(digitalRead(buttonGreen)==0) goto backhere;
+                        }
+                      get_update_from_temporary_register_table();
+                      writeDatabase(SD, "/registered.txt", "/status_and_balance.txt", "/availableSlots.txt");
+                      display.clearDisplay();
+                      display.setCursor(0, 0);
+                      display.println("Thank you, my database is up to date.");
+                      display.display();
                     }
                 }
             }
@@ -346,20 +373,36 @@ void loop() {
             {
               if(digitalRead(buttonGreen)==0)
                 {
-                  show_qrcode();
-                  for(int r=0; r<=3000; r++) sendUID();
                   String nm="no-name";
                   int blnc=0;
                   addCard(cardUID, nm, "outside", blnc);
+                  writeDatabase(SD, "/registered.txt", "/status_and_balance.txt", "/availableSlots.txt");
+
+                  show_registration_again:
+                  show_qrcode();
+                  for(int r=0; r<=33; r++) sendUID();
                   Serial.println("Thank you for register the card");
                   display.clearDisplay();
                   display.setCursor(0, 0);
                   display.println("Thank you for register your card");
-                  display.println("Your card name=" + nm);
                   display.println("Your card balance=" + blnc);
                   display.display();
                   delay(5000);
+                  display.setCursor(0, 0);
+                  display.println("Have you finished fill in the form on the website?");
+                  display.println("-push the button-");
+                  display.display();
+                  while(1)
+                    {
+                      if(digitalRead(buttonGreen)==0) break;
+                      else if(digitalRead(buttonRed)==0) goto show_registration_again;
+                    }
+                  get_update_from_temporary_register_table();
                   writeDatabase(SD, "/registered.txt", "/status_and_balance.txt", "/availableSlots.txt");
+                  display.clearDisplay();
+                  display.setCursor(0, 0);
+                  display.println("Thank you, my database is up to date.");
+                  display.display();
                   break;
                 }
               else if(digitalRead(buttonRed)==0) 

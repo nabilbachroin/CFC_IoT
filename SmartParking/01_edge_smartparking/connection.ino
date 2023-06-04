@@ -2,6 +2,12 @@ void checkConnection()
 {
   if(WiFi.status() == WL_CONNECTED)
     {
+      if(after_disconnect==true)
+        {
+          get_update_from_temporary_register_table();
+          writeDatabase(SD, "/registered.txt", "/status_and_balance.txt", "/availableSlots.txt");
+          sendDataToServer();
+        }
       WiFiClient client;
       int httpPort = 80;
       if (!client.connect(host, httpPort)) 
@@ -18,6 +24,7 @@ void checkConnection()
           //Serial.println("Ping successful");
           client.stop();
         }
+      after_disconnect=false;
     }
   else 
     {
@@ -28,16 +35,53 @@ void checkConnection()
             {
               digitalWrite(led_online, LOW);
               digitalWrite(led_offline, HIGH);
+              after_disconnect=true;
               //Serial.println("WiFi not connected");
             }
           else 
             {
+              get_update_from_temporary_register_table();
+              writeDatabase(SD, "/registered.txt", "/status_and_balance.txt", "/availableSlots.txt");
               sendDataToServer();
               break;
             }
         }
     }
 }
+
+void get_update_from_temporary_register_table()
+  {
+    HTTPClient http;
+    http.begin("http://44.197.96.78/dashboard/updateDATAEsp.php");
+    int httpCode = http.GET();
+    if (httpCode > 0) 
+      {
+        String payload = http.getString();
+        Serial.println("payload: " + payload);
+        DynamicJsonDocument doc(1024);
+        DeserializationError error = deserializeJson(doc, payload);
+        if (error)
+          {
+            Serial.print(F("deserializeJson() failed: "));
+            Serial.println(error.f_str());
+            return;
+          }
+        cardCount = doc.size();
+        for (int i = 0; i < cardCount; i++) 
+          {
+            cardDatabase[i].UID = doc[i]["UID"].as<String>();
+            cardDatabase[i].name = doc[i]["name"].as<String>();
+            cardDatabase[i].status = doc[i]["status"].as<String>();
+            cardDatabase[i].balance = doc[i]["balance"].as<int>();
+          }
+      }
+    else 
+      {
+        Serial.println("Error on HTTP request");
+      }
+    http.end();
+  }
+
 
 void sendUID() {
   Serial.println("Starting sendUID...");  // Add this line
