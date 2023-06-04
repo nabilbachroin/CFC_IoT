@@ -85,7 +85,7 @@ void readDatabase(fs::FS &fs, const char * registeredPath, const char * statusPa
       }
     slotFile.close();
     checkRelay();
-    sendDataToServer();
+    if(WiFi.status() == WL_CONNECTED) sendDataToServer();
   }
 
 void addCard(String UID, String name, String status, int balance) 

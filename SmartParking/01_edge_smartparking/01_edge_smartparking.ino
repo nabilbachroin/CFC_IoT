@@ -136,8 +136,7 @@ void setup() {
       Serial.println(WiFi.localIP());
       Serial.println("================");
     }
-
-	qrcode(); delay(5000);
+  Serial.println("Out from void setup");
 }
  
 void loop() {
@@ -164,7 +163,20 @@ void loop() {
       if (card != NULL) 
         {
           bool useElectricChargingSlot = false;
-          if(card->balance <=0)
+          if(card->name == "no-name" && card->balance <=0 && card->status == "outside")
+            {
+              Serial.println("He need to finish the registration");
+              display.clearDisplay();
+              display.setCursor(0, 0);
+              display.println("Hello, You need finish the registration in website fisrt");
+              display.println("Sorry, your balance is empty");
+              display.display();
+              digitalWrite(ledRedPin, 1);
+              //playSpeaker("Sorry-parklot_full.mp3");
+              delay(5000); // nanti delay hapus aja kalau udah ada suaranya
+              goto skipthisstep;
+            }
+          else if(card->balance <=0)
             {
               Serial.println(card->name + " Can not Enter, balance not enough");
               display.clearDisplay();
@@ -312,7 +324,8 @@ void loop() {
             {
               if(digitalRead(buttonGreen)==0)
                 {
-                  sendUID();
+                  show_qrcode();
+                  for(int r=0; r<=3000; r++) sendUID();
                   String nm="no-name";
                   int blnc=0;
                   addCard(cardUID, nm, "outside", blnc);
