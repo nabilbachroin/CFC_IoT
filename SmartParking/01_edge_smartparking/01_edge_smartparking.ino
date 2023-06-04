@@ -12,7 +12,9 @@
   d. compare with mySQL database
   e. and then we change the name in temporary table with new name from user mySQL database
   f. after that, send the data to the ESP32 to update local database
-8. 
+8. Already register on website, but the internet connection on system still broke
+   So the local database still not update yet, and the system can give the announcement that the 
+   current position there is internet connection inference
 
 - [Me] Not finished yet:
 - AWS
@@ -166,15 +168,35 @@ void loop() {
           if(card->name == "no-name" && card->balance <=0 && card->status == "outside")
             {
               Serial.println("He need to finish the registration");
+              digitalWrite(ledRedPin, 1);
               display.clearDisplay();
               display.setCursor(0, 0);
-              display.println("Hello, You need finish the registration in website fisrt");
-              display.println("Sorry, your balance is empty");
+              display.println("Hello, You need to finish the registration proccess fisrt.");
+              display.println("Have you finish the registration in the website?");
+              display.println("-push the button-");
               display.display();
-              digitalWrite(ledRedPin, 1);
               //playSpeaker("Sorry-parklot_full.mp3");
-              delay(5000); // nanti delay hapus aja kalau udah ada suaranya
-              goto skipthisstep;
+              while(1)
+                {
+                  if(digitalRead(buttonGreen)==0) 
+                    {
+                      Serial.println("He already finish the registration in website,");
+                      Serial.println("But we still disconnect with internet,");
+                      Serial.println("So my local database still not update yet.");
+                      display.clearDisplay();
+                      display.setCursor(0, 0);
+                      display.println("Sorry, we still disconnect with internet,");
+                      display.println("My database still not update,");
+                      display.println("Please wait until my Online_led indicator is turn on.");
+                      display.display();
+                      goto skipthisstep;
+                    }
+                  else if(digitalRead(buttonRed)==0) 
+                    {
+                      show_qrcode();
+                      for(int r=0; r<=3000; r++) sendUID();
+                    }
+                }
             }
           else if(card->balance <=0)
             {
