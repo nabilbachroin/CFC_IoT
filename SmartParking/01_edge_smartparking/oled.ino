@@ -1,7 +1,7 @@
 void setupDisplay() 
   {
     Wire.begin(SDA_PIN, SCL_PIN);
-    display.begin(SSD1306_SWITCHCAPVCC, 0x3D);
+    display.begin(SSD1306_SWITCHCAPVCC, 0x3C);  //3C ya 3D
     display.clearDisplay();
     display.setTextColor(WHITE);
     display.setTextSize(1);

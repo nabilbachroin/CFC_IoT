@@ -207,6 +207,7 @@ void loop() {
                       show_qrcode();
                       for(int r=0; r<=33; r++) sendUID();
 
+                      display.clearDisplay();
                       display.setCursor(0, 0);
                       display.println("Have you finished fill in the form on the website?");
                       display.println("-push the button-");
@@ -388,6 +389,7 @@ void loop() {
                   display.println("Your card balance=" + blnc);
                   display.display();
                   delay(5000);
+                  display.clearDisplay();
                   display.setCursor(0, 0);
                   display.println("Have you finished fill in the form on the website?");
                   display.println("-push the button-");
