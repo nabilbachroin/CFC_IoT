@@ -5,6 +5,12 @@
 // Thankyou-becareful_otr.mp3
 // 
 
+void checkRelay()
+  {
+    if(slotData.electricChargingSlots>0) digitalWrite(relay, HIGH);
+    else digitalWrite(relay, LOW);
+  }
+
 void playSpeaker(const char* music)
 {
   if (strcmp(music, "system_starting.mp3") == 0) {speaker.play(1); delay(4000);}
@@ -26,6 +32,7 @@ void openGate()
     for (int i = 0; i < 100; i++) // for 10 seconds
       {
         gateServo.write(90);
+        delay(197);
         if(digitalRead(proximitySensor) == LOW) 
           {
             delay(2500); // to make sure that the car is already go away
@@ -41,12 +48,17 @@ void openGate()
       }
   }
 
-  void setup_LedButton()
-    {
-      pinMode(ledBluePin, OUTPUT);
-      pinMode(ledRedPin, OUTPUT);
-      digitalWrite(ledRedPin, LOW);
-      digitalWrite(ledBluePin, LOW);
-      pinMode(buttonGreen, INPUT_PULLUP);
-      pinMode(buttonRed, INPUT_PULLUP);
-    }
+void setup_LedButton()
+  {
+    pinMode(relay,OUTPUT);
+    pinMode(ledBluePin, OUTPUT);
+    pinMode(ledRedPin, OUTPUT);
+    digitalWrite(ledRedPin, LOW);
+    digitalWrite(ledBluePin, LOW);
+    pinMode(led_online, OUTPUT);
+    pinMode(led_offline, OUTPUT);
+    digitalWrite(led_online, LOW);
+    digitalWrite(led_offline, LOW);
+    pinMode(buttonGreen, INPUT_PULLUP);
+    pinMode(buttonRed, INPUT_PULLUP);
+  }
