@@ -16,20 +16,9 @@
    So the local database still not update yet, and the system can give the announcement that the 
    current position there is internet connection inference
 
-- [Me] Not finished yet:
-- AWS
-
 - [My Friends]:
 - setting display
 - Buy for Bright Green Led
-
-- make mp3 file:
-- Sorry balance not enough
-- your card is not registered, do you want to register?
-- thank you for register your card
-- you are not register your card
-- etc
-
 */
 
 #include <FS.h>
@@ -176,7 +165,6 @@ void loop() {
               display.println("Have you finish the registration in the website?");
               display.println("-push the button-");
               display.display();
-              //playSpeaker("Sorry-parklot_full.mp3");
               while(1)
                 {
                   if(digitalRead(buttonGreen)==0) 
@@ -196,7 +184,8 @@ void loop() {
                       display.println("My database still not update,");
                       display.println("Please wait until my Online_led indicator is turn on.");
                       display.display();
-                      delay(5500);
+                      playSpeaker("thankyou_for_register.mp3");
+                      delay(3000);
 
                       checkConnection();
                       goto skipthisstep;
@@ -219,10 +208,14 @@ void loop() {
                         }
                       get_update_from_temporary_register_table();
                       writeDatabase(SD, "/registered.txt", "/status_and_balance.txt", "/availableSlots.txt");
+                      Serial.println("Thank you for register the card");
                       display.clearDisplay();
                       display.setCursor(0, 0);
+                      display.println("Thank you for register your card");
                       display.println("Thank you, my database is up to date.");
                       display.display();
+                      playSpeaker("thankyou_for_register.mp3");
+                      delay(1533);
                     }
                 }
             }
@@ -235,8 +228,8 @@ void loop() {
               display.println("Sorry, your balance is empty");
               display.display();
               digitalWrite(ledRedPin, 1);
-              //playSpeaker("Sorry-parklot_full.mp3");
-              delay(5000); // nanti delay hapus aja kalau udah ada suaranya
+              playSpeaker("balance_not_enough.mp3");
+              delay(333);
               goto skipthisstep;
             }
           else if(card->status == "outside" && slotData.parkingSlots <= 0 && slotData.electricChargingSlots <= 0)
@@ -249,6 +242,7 @@ void loop() {
               display.display();
               digitalWrite(ledRedPin, 1);
               playSpeaker("Sorry-parklot_full.mp3");
+              delay(333);
               goto skipthisstep;
             }
           else if(card->status == "outside" && (slotData.parkingSlots>0 || slotData.electricChargingSlots>0)) 
@@ -370,6 +364,8 @@ void loop() {
           display.println("Do you want to register?");
           display.println("-push the button-");
           display.display();
+          playSpeaker("not_registered_wouldulike2register.mp3");
+          delay(100);
           while(1)
             {
               if(digitalRead(buttonGreen)==0)
@@ -382,13 +378,7 @@ void loop() {
                   show_registration_again:
                   show_qrcode();
                   for(int r=0; r<=33; r++) sendUID();
-                  Serial.println("Thank you for register the card");
-                  display.clearDisplay();
-                  display.setCursor(0, 0);
-                  display.println("Thank you for register your card");
-                  display.println("Your card balance=" + blnc);
-                  display.display();
-                  delay(5000);
+                  delay(5333);
                   display.clearDisplay();
                   display.setCursor(0, 0);
                   display.println("Have you finished fill in the form on the website?");
@@ -401,10 +391,15 @@ void loop() {
                     }
                   get_update_from_temporary_register_table();
                   writeDatabase(SD, "/registered.txt", "/status_and_balance.txt", "/availableSlots.txt");
+                  Serial.println("Thank you for register the card");
                   display.clearDisplay();
                   display.setCursor(0, 0);
+                  display.println("Thank you for register your card");
+                  display.println("Your card balance=" + blnc);
                   display.println("Thank you, my database is up to date.");
                   display.display();
+                  playSpeaker("thankyou_for_register.mp3");
+                  delay(2133);
                   break;
                 }
               else if(digitalRead(buttonRed)==0) 
@@ -415,7 +410,8 @@ void loop() {
                   display.println("Okay, You didn't register your card");
                   display.println("Thank you");
                   display.display();
-                  delay(2000);
+                  playSpeaker("registration_fail.mp3");
+                  delay(333);
                   break;
                 }
             }
