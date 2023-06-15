@@ -117,7 +117,7 @@
 					<div class="control-group">
 						<label class="control-label">ID</label>
 						<div class="controls">
-							<textarea name="id" id="getUID" placeholder="Please Tag your Card" rows="1" cols="1" required></textarea>
+							<textarea name="id" id="getUID" placeholder="Please Tag your Card" type="text" required></textarea>
 						</div>
 					</div>
 						

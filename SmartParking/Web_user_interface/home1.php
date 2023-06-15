@@ -26,17 +26,25 @@
 			}
 			.wrapper h2 {text-align: center}
 			.wrapper form .form-group span {color: red;}
+			
+			body {
+				background-image: url(bg.png);
+			}
+			
+			.btn{
+				top:center%;
+				left:200%;
+			}
 		</style>
 	</head>
 	<body>
 		<main>
 			<section class="container wrapper">
 				<div class="page-header">
-					<h2 class="display-5">Welcome home <?php echo $_SESSION['username']; ?></h2>
+					<h2 class="display-5">Welcome home Creator <?php echo $_SESSION['username']; ?></h2>
+					<h2><a href="password_reset.php" class="btn btn-block btn-outline-warning">Reset Password</a>
+						<a href="logout.php" class="btn btn-block btn-outline-danger">Sign Out</a></h2>
 				</div>
-
-				<a href="password_reset.php" class="btn btn-block btn-outline-warning">Reset Password</a>
-				<a href="logout.php" class="btn btn-block btn-outline-danger">Sign Out</a>
 			</section>
 		</main>
 	</body>
@@ -106,25 +114,22 @@
 			margin-right: auto;
 		}
 		</style>
-		
-		<title>Home : Smart Parking</title>
+		<title>Home : Smart Parking Admin</title>
 	</head>
 	
 	<body>
-	<div class="bg">
-		<h2 align="center">Smart Parking</h2>
+		<div class="bg">
 		<h2 style="text-align:center">Smart Parking</h2>
 		<ul class="topnav">
 			<li  class="username"><span><?php echo($_SESSION['username']); ?></span></li>
-			<li><a class="active" href="home.php">Home</a></li>
-			<li><a href="user data.php">User Data</a></li>
-			<li><a href="registration.php">Registration</a></li>
+			<li><a class="active" href="home1.php">Home</a></li>
+			<li><a href="user data1.php">User Data</a></li>
+			<li><a href="registration_admin.php">Registration</a></li>
 			<li><a href="parking.php">Parking Free</a></li>
+			<li><a href="balance.php">Balance</a></li>
 		</ul>
 		<br>
-		<h3>Welcome to Team 4 Project "Smart Parking"</h3>
-	</div>
-		
-		<img src="schema.png" alt="" style="width:55%;"></img>
+		<h3 style="text-align:center">Welcome to Team 4 Project "Smart Parking"</h3>
+		</div>
 	</body>
 </html>

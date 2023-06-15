@@ -1,6 +1,17 @@
 <?php
-	$Write="<?php $" . "UIDresult=''; " . "echo $" . "UIDresult;" . " ?>";
-	file_put_contents('UIDContainer.php',$Write);
+	require 'database.php';
+	$id = null;
+	if ( !empty($_GET['id'])) {
+		$id = $_REQUEST['id'];
+	}
+	
+	// Initialize session
+	session_start();
+
+	if (!isset($_SESSION['loggedin']) && $_SESSION['loggedin'] !== false) {
+		header('location: login.php');
+		exit;
+	}
 	
 ?>
 
@@ -15,31 +26,14 @@
 		<script src="jquery.min.js"></script>
 		<script>
 			$(document).ready(function(){
-				$("#getUID").load("UIDContainer.php");
+				$("#postData").load("UIDContainer.php");
 				setInterval(function()	{
-					$("#getUID").load("UIDContainer.php");
+					$("#postData").load("UIDContainer.php");
 				}, 500);
 			});
 		</script>
 		<style>
-		body, html {
-		  height: 100%;
-		  margin: 0;
-		}
-
-		.bg {
-		  /* The image used */
-		  background-image: url("schema.png");
-
-		  /* Full height */
-		  height: 100%; 
-
-		  /* Center and scale the image nicely */
-		  background-position: center;
-		  background-repeat: no-repeat;
-		  background-size: cover;
-		}
-		{
+		html {
 			font-family: Arial;
 			display: inline-block;
 			margin: 0px auto;
@@ -93,55 +87,38 @@
 	
 		<h2 align="center">Smart Parking</h2>
 		<ul class="topnav">
-			<li><a href="home.php">Home</a></li>
-			<li><a href="user data.php">User Data</a></li>
-			<li><a class="active" href="registration.php">Registration</a></li>
+			<li><a href="home1.php">Home</a></li>
+			<li><a href="user data1.php">User Data</a></li>
+			<li><a class="active" href="registration_admin.php">Registration</a></li>
 			<li><a href="parking.php">Parking free</a></li>
 		</ul>
 		
-		<div class="container">
+		<div class="container money">
 			<br>
 			<div class="center" style="margin: 0 auto; width:495px; border-style: solid; border-color: #f2f2f2;">
 				<div class="row">
 					<h3 align="center">Registration Form</h3>
 				</div>
 				<br>
-				<form class="form-horizontal" action="insertDB.php" method="post" >
+				<form class="form-horizontal" action="balancesum.php" method="post" >
 					<div class="control-group">
-						<label class="control-label">ID</label>
+						<label class="control-label">Username</label>
 						<div class="controls">
-							<textarea name="id" id="getUID" placeholder="Please Tag your Card" required></textarea>
+							<input id="div_refresh" name="username" type="text" placeholder="" required>
 						</div>
 					</div>
-						
+					
 					<div class="control-group">
 						<label class="control-label">Name</label>
 						<div class="controls">
 							<input id="div_refresh" name="name" type="text" placeholder="" required>
 						</div>
 					</div>
-						
+
 					<div class="control-group">
-						<label class="control-label">Gender</label>
+						<label class="control-label">Balance</label>
 						<div class="controls">
-							<select name="gender">
-								<option value="Male">Male</option>
-								<option value="Female">Female</option>
-							</select>
-						</div>
-					</div>
-					
-					<div class="control-group">
-						<label class="control-label">Email</label>
-						<div class="controls">
-							<input name="email" type="text" placeholder="" required>
-						</div>
-					</div>
-						
-					<div class="control-group">
-						<label class="control-label">Car</label>
-						<div class="controls">
-							<input name="car" type="text" placeholder="" required>
+							<input id="div_refresh" name="balance" type="text" placeholder="" required>
 						</div>
 					</div>
 						
@@ -151,6 +128,13 @@
 				</form>
 	
 			</div>
-		</div> <!== /container ==>
+		</div>
+	</body>
+	<body>
+		<h2 style="text-align:center">Smart Parking</h2>
+		<ul class="nav navbar-nav navbar-right user-nav">
+			<li class="username"><span><?php echo($_SESSION['username']); ?></span></li>
+			<li class="dropdown avatar-dropdowm">
+		</ul>
 	</body>
 </html>

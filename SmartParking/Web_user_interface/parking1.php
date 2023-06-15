@@ -1,6 +1,10 @@
 <?php
-	$Write="<?php $" . "UIDresult=''; " . "echo $" . "UIDresult;" . " ?>";
-	file_put_contents('UIDContainer.php',$Write);
+	require 'database.php';
+	require 'CardDataContainer.php'; 
+	$id = null;
+	if ( !empty($_GET['id'])) {
+		$id = $_REQUEST['id'];
+	}
 	
 	// Initialize session
 	session_start();
@@ -9,6 +13,15 @@
 		header('location: login.php');
 		exit;
 	}
+	
+	$pdo = Database::connect();
+	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	$sql = "SELECT * FROM table_rfid where id = ?";
+	$q = $pdo->prepare($sql);
+	$q->execute(array($id));
+	$data = $q->fetch(PDO::FETCH_ASSOC);
+	Database::disconnect();
+	
 ?>
 
 <!DOCTYPE html>
@@ -19,6 +32,15 @@
 		<meta charset="utf-8">
 		<link href="css/bootstrap.min.css" rel="stylesheet">
 		<script src="js/bootstrap.min.js"></script>
+		<script src="jquery.min.js"></script>
+		<script>
+			$(document).ready(function(){
+				$("#postData").load("UIDContainer.php");
+				setInterval(function()	{
+					$("#postData").load("UIDContainer.php");
+				}, 500);
+			});
+		</script>
 		<style>
 		body, html {
 		  height: 100%;
@@ -45,6 +67,12 @@
 			
 		}
 		
+		textarea {
+			resize: none;
+		}
+		
+		ul.topnav li {float: left;}
+		
 		ul.topnav {
 			list-style-type: none;
 			margin: auto;
@@ -67,77 +95,66 @@
 		
 		ul.topnav li a.active {background-color: #4CAF50}
 		
-		ul.topnav li.right {float; right;}
+		ul.topnav li.right {float: right;}
 		
 		@media screen and (max-width: 600px) {
 			ul.topnav li.right,
 			ul.topnav li {float: none;}
-		}
-		
-		.table {
-			margin: auto;
-			width: 90%;
-		}
-		
-		thead {
-			color: #FFFFFF
+			}
+			
+		@media screen and (max-width: 600px) {
+			ul.topnav li.right,
+			ul.topnav li {float: none;}
 		}
 		</style>
 		
-		<title>User Data : Smart Parking</title>
+		<title>Home : Smart Parking</title>
 	</head>
-	
 	<body>
 		<h2>Smart Parking</h2>
 		<ul class="topnav">
-			<li><a href="home.php">Home</a></li>
-			<li><a class="active" href="user data.php">User Data</a></li>
-			<li><a href="registration.php">Registration</a></li>
-			<li><a href="parking.php">Parking Free</a></li>
+			<li><a href="home1.php">Home</a></li>
+			<li><a href="user data1.php">User Data</a></li>
+			<li><a href="registration_admin1.php">Registration</a></li>
+			<li><a class="active" href="parking.php">Parking Free</a></li>
+			<li><a href="balance.php">Balance</a></li>
 		</ul>
 		<br>
 		<div class="container">
 			<div class="row">
-				<h3>User Data Table</h3>
+				<h3>PARKING</h3>
 			</div>
 			<div class="row">
 				<table class="table table-striped table-bordered">
 					<thead>
 						<tr bgcolor="$10a0c5" color="$FFFFFF">
-							<th>Name</th>
 							<th>ID</th>
-							<th>Gender</th>
-							<th>Email</th>
-							<th>Car Type</th>
-							<th>Action</th>
+							<th>Name</th>
 							<th>Status</th>
 							<th>Balance</th>
 						</tr>
 					</thead>
 					<tbody>
 					<?php
-					 include 'database.php';
-					 $pdo = Database::connect();
-					 $sql = "SELECT table_rfid.username, table_rfid.name, table_rfid.id, table_rfid.gender, table_rfid.email, table_rfid.car, temporary_register.id, temporary_register.status, temporary_register.balance FROM table_rfid INNER JOIN temporary_register ON table_rfid.id=temporary_register.id WHERE username = '{$_SESSION[ "username" ]}'";
-					 foreach ($pdo->query($sql) as $row) {
-								echo '<tr>';
-								echo '<td>'. $row['name'] . '</td>';
-								echo '<td>'. $row['id'] . '</td>';
-								echo '<td>'. $row['gender'] . '</td>';
-								echo '<td>'. $row['email'] . '</td>';
-								echo '<td>'. $row['car'] . '</td>';
-								echo '<td><a class="btn btn-success" href="user data edit page.php?id='.$row['id'].'">Edit</a>';
-								echo ' ';
-								echo '<a class="btn btn-danger" href="user data delete page.php?id='.$row['id'].'">Delete</a>';
-								echo '</td>';
-								echo '<td>'. $row['status'] .'</td>';
-								echo '<td>'. $row['balance'] .'</td>';
-								echo '</tr>';
-					 }
-					 Database::disconnect();
+					  // Include the database connection file
+
+					  if (isset($cardData) && (is_array($cardData) || is_object($cardData)))
+					  {
+						foreach ($cardData as $card) {
+						   echo "<tr>";
+						   echo "<td>" . $card["UID"] . "</td>";
+						   echo "<td>" . $card["name"] . "</td>";
+						   echo "<td>" . $card["status"] . "</td>";
+						   echo "<td>" . $card["balance"] . "</td>";
+						   echo "</tr>";
+						   
+						} 
+					  }
 					?>
+
 					</tbody>
 				</table>
+				<br>
 			</div>
 		</div> <!== /container ==>
 	</body>
