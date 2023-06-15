@@ -20,11 +20,29 @@
 		<link href="css/bootstrap.min.css" rel="stylesheet">
 		<script src="js/bootstrap.min.js"></script>
 		<style>
-		html {
+		body, html {
+		  height: 100%;
+		  margin: 0;
+		}
+
+		.bg {
+		  /* The image used */
+		  background-image: url("schema.png");
+
+		  /* Full height */
+		  height: 100%; 
+
+		  /* Center and scale the image nicely */
+		  background-position: center;
+		  background-repeat: no-repeat;
+		  background-size: cover;
+		}
+		
+		{
 			font-family: Arial;
 			display: inline-block;
 			margin: 0px auto;
-			text-align: center;
+			
 		}
 		
 		ul.topnav {
@@ -93,20 +111,15 @@
 							<th>Car Type</th>
 							<th>Action</th>
 							<th>Status</th>
+							<th>Balance</th>
 						</tr>
 					</thead>
 					<tbody>
 					<?php
 					 include 'database.php';
 					 $pdo = Database::connect();
-					 $sql = "SELECT * FROM table_rfid WHERE username = '{$_SESSION[ "username" ]}' ORDER BY name ASC";
+					 $sql = "SELECT table_rfid.username, table_rfid.name, table_rfid.id, table_rfid.gender, table_rfid.email, table_rfid.car, temporary_register.id, temporary_register.status, temporary_register.balance FROM table_rfid INNER JOIN temporary_register ON table_rfid.id=temporary_register.id WHERE username = '{$_SESSION[ "username" ]}'";
 					 foreach ($pdo->query($sql) as $row) {
-						 if($row['status']==1) {
-							 $status = 'Active';
-						 }
-						 else{
-							 $status = "Deactive";
-						 }
 								echo '<tr>';
 								echo '<td>'. $row['name'] . '</td>';
 								echo '<td>'. $row['id'] . '</td>';
@@ -117,7 +130,8 @@
 								echo ' ';
 								echo '<a class="btn btn-danger" href="user data delete page.php?id='.$row['id'].'">Delete</a>';
 								echo '</td>';
-								echo '<td>'. $status .'</td>';
+								echo '<td>'. $row['status'] .'</td>';
+								echo '<td>'. $row['balance'] .'</td>';
 								echo '</tr>';
 					 }
 					 Database::disconnect();

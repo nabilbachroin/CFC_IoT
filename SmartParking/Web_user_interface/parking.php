@@ -1,5 +1,6 @@
 <?php
 	require 'database.php';
+	require 'CardDataContainer.php'; 
 	$id = null;
 	if ( !empty($_GET['id'])) {
 		$id = $_REQUEST['id'];
@@ -20,6 +21,7 @@
 	$q->execute(array($id));
 	$data = $q->fetch(PDO::FETCH_ASSOC);
 	Database::disconnect();
+	
 ?>
 
 <!DOCTYPE html>
@@ -57,6 +59,7 @@
 		  background-repeat: no-repeat;
 		  background-size: cover;
 		}
+		
 		{
 			font-family: Arial;
 			display: inline-block;
@@ -108,81 +111,50 @@
 		<title>Home : Smart Parking</title>
 	</head>
 	<body>
-	
-		<h2 align="center">Smart Parking</h2>
+		<h2>Smart Parking</h2>
 		<ul class="topnav">
-			<li><a href="home1.php">Home</a></li>
-			<li><a href="user data1.php">User Data</a></li>
-			<li><a class="active" href="registration_admin.php">Registration</a></li>
-			<li><a href="parking.php">Parking free</a></li>
-			<li><a href="balance.php">Balance</a></li>
+			<li><a href="home.php">Home</a></li>
+			<li><a href="user data.php">User Data</a></li>
+			<li><a href="registration.php">Registration</a></li>
+			<li><a class="active" href="parking.php">Parking Free</a></li>
 		</ul>
-		
+		<br>
 		<div class="container">
-			<br>
-			<div class="center" style="margin: 0 auto; width:495px; border-style: solid; border-color: #f2f2f2;">
-				<div class="row">
-					<h3 align="center">Registration Form</h3>
-				</div>
+			<div class="row">
+				<h3>PARKING</h3>
+			</div>
+			<div class="row">
+				<table class="table table-striped table-bordered">
+					<thead>
+						<tr bgcolor="$10a0c5" color="$FFFFFF">
+							<th>ID</th>
+							<th>Name</th>
+							<th>Status</th>
+							<th>Balance</th>
+						</tr>
+					</thead>
+					<tbody>
+					<?php
+					  // Include the database connection file
+
+					  if (isset($cardData) && (is_array($cardData) || is_object($cardData)))
+					  {
+						foreach ($cardData as $card) {
+						   echo "<tr>";
+						   echo "<td>" . $card["UID"] . "</td>";
+						   echo "<td>" . $card["name"] . "</td>";
+						   echo "<td>" . $card["status"] . "</td>";
+						   echo "<td>" . $card["balance"] . "</td>";
+						   echo "</tr>";
+						   
+						} 
+					  }
+					?>
+
+					</tbody>
+				</table>
 				<br>
-				<form class="form-horizontal" action="insertDB.php" method="post" >
-					<div class="control-group">
-						<label class="control-label">Username</label>
-						<div class="controls">
-							<input id="div_refresh" name="username" type="text" placeholder="" required>
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label">ID</label>
-						<div class="controls">
-							<textarea name="id" id="getUID" placeholder="Please Tag your Card" type="text" required></textarea>
-						</div>
-					</div>
-						
-					<div class="control-group">
-						<label class="control-label">Name</label>
-						<div class="controls">
-							<input id="div_refresh" name="name" type="text" placeholder="" required>
-						</div>
-					</div>
-						
-					<div class="control-group">
-						<label class="control-label">Gender</label>
-						<div class="controls">
-							<select name="gender">
-								<option value="Male">Male</option>
-								<option value="Female">Female</option>
-							</select>
-						</div>
-					</div>
-					
-					<div class="control-group">
-						<label class="control-label">Email</label>
-						<div class="controls">
-							<input name="email" type="text" placeholder="" required>
-						</div>
-					</div>
-						
-					<div class="control-group">
-						<label class="control-label">Car</label>
-						<div class="controls">
-							<input name="car" type="text" placeholder="" required>
-						</div>
-					</div>
-						
-					<div class="form-actions">
-						<button type="submit" class="btn btn-success">Save</button>
-					</div>
-				</form>
-	
 			</div>
 		</div> <!== /container ==>
-	</body>
-	<body>
-		<h2 style="text-align:center">Smart Parking</h2>
-		<ul class="nav navbar-nav navbar-right user-nav">
-			<li class="username"><span><?php echo($_SESSION['username']); ?></span></li>
-			<li class="dropdown avatar-dropdowm">
-		</ul>
 	</body>
 </html>

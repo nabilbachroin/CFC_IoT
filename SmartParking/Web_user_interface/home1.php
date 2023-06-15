@@ -26,6 +26,15 @@
 			}
 			.wrapper h2 {text-align: center}
 			.wrapper form .form-group span {color: red;}
+			
+			body {
+				background-image: url(bg.png);
+			}
+			
+			.btn{
+				top:center%;
+				left:200%;
+			}
 		</style>
 	</head>
 	<body>
@@ -33,10 +42,9 @@
 			<section class="container wrapper">
 				<div class="page-header">
 					<h2 class="display-5">Welcome home Creator <?php echo $_SESSION['username']; ?></h2>
+					<h2><a href="password_reset.php" class="btn btn-block btn-outline-warning">Reset Password</a>
+						<a href="logout.php" class="btn btn-block btn-outline-danger">Sign Out</a></h2>
 				</div>
-
-				<a href="password_reset.php" class="btn btn-block btn-outline-warning">Reset Password</a>
-				<a href="logout.php" class="btn btn-block btn-outline-danger">Sign Out</a>
 			</section>
 		</main>
 	</body>
@@ -46,7 +54,25 @@
 		<link href="css/bootstrap.min.css" rel="stylesheet">
 		<script src="js/bootstrap.min.js"></script>
 		<style>
-		html {
+		body, html {
+		  height: 100%;
+		  margin: 0;
+		}
+
+		.bg {
+		  /* The image used */
+		  background-image: url("schema.png");
+
+		  /* Full height */
+		  height: 100%; 
+
+		  /* Center and scale the image nicely */
+		  background-position: center;
+		  background-repeat: no-repeat;
+		  background-size: cover;
+		}
+		
+		{
 			font-family: Arial;
 			display: inline-block;
 			margin: 0px auto;
@@ -88,11 +114,11 @@
 			margin-right: auto;
 		}
 		</style>
-		
 		<title>Home : Smart Parking Admin</title>
 	</head>
 	
 	<body>
+		<div class="bg">
 		<h2 style="text-align:center">Smart Parking</h2>
 		<ul class="topnav">
 			<li  class="username"><span><?php echo($_SESSION['username']); ?></span></li>
@@ -100,10 +126,10 @@
 			<li><a href="user data1.php">User Data</a></li>
 			<li><a href="registration_admin.php">Registration</a></li>
 			<li><a href="parking.php">Parking Free</a></li>
+			<li><a href="balance.php">Balance</a></li>
 		</ul>
 		<br>
-		<h3>Welcome to Team 4 Project "Smart Parking"</h3>
-		
-		<img src="schema.png" alt="" style="width:55%;"></img>
+		<h3 style="text-align:center">Welcome to Team 4 Project "Smart Parking"</h3>
+		</div>
 	</body>
 </html>

@@ -46,7 +46,25 @@
 		<link href="css/bootstrap.min.css" rel="stylesheet">
 		<script src="js/bootstrap.min.js"></script>
 		<style>
-		html {
+		body, html {
+		  height: 100%;
+		  margin: 0;
+		}
+
+		.bg {
+		  /* The image used */
+		  background-image: url("schema.png");
+
+		  /* Full height */
+		  height: 100%; 
+
+		  /* Center and scale the image nicely */
+		  background-position: center;
+		  background-repeat: no-repeat;
+		  background-size: cover;
+		}
+		
+		{
 			font-family: Arial;
 			display: inline-block;
 			margin: 0px auto;
@@ -93,6 +111,8 @@
 	</head>
 	
 	<body>
+	<div class="bg">
+		<h2 align="center">Smart Parking</h2>
 		<h2 style="text-align:center">Smart Parking</h2>
 		<ul class="topnav">
 			<li  class="username"><span><?php echo($_SESSION['username']); ?></span></li>
@@ -103,6 +123,7 @@
 		</ul>
 		<br>
 		<h3>Welcome to Team 4 Project "Smart Parking"</h3>
+	</div>
 		
 		<img src="schema.png" alt="" style="width:55%;"></img>
 	</body>
