@@ -84,10 +84,10 @@ void get_update_from_temporary_register_table()
 
 
 void sendUID() {
-  Serial.println("Starting sendUID...");  // Add this line
+  Serial.println("Starting sendUID...");
   if(WiFi.status() == WL_CONNECTED) 
   {
-    Serial.println("WiFi is connected...");  // Add this line
+    Serial.println("WiFi is connected...");
     HTTPClient http;
 
     String UIDresultSend, postData;
@@ -95,11 +95,11 @@ void sendUID() {
 
     postData = "UIDresult=" + UIDresultSend;
 
-    Serial.println("Attempting to connect to server...");  // Add this line
+    Serial.println("Attempting to connect to server...");
     http.begin("http://44.197.96.78/dashboard/getUID.php/");
     http.addHeader("Content-Type", "application/x-www-form-urlencoded");
 
-    Serial.println("Attempting to send data...");  // Add this line
+    Serial.println("Attempting to send data...");
     Serial.println(postData);
     int httpCode = http.POST(postData);   //Send the request
     String payload = http.getString();    //Get the response payload
@@ -107,7 +107,7 @@ void sendUID() {
     Serial.println("httpCode= " + String(httpCode));    // Print HTTP return code
     Serial.print("payload= ");
     Serial.println(payload);                    //Print request response payload
-    Serial.println("Finished sendDataToServer.");  // Add this line
+    Serial.println("Finished sendDataToServer.");
     http.end();
   } 
   else 
@@ -117,10 +117,10 @@ void sendUID() {
 }
 
 void sendDataToServer() {
-  Serial.println("Starting sendDataToServer...");  // Add this line
+  Serial.println("Starting sendDataToServer...");
   if(WiFi.status() == WL_CONNECTED) 
     {
-      Serial.println("WiFi is connected...");  // Add this line
+      Serial.println("WiFi is connected...");
       HTTPClient http;
 
       // Make json object
@@ -140,11 +140,11 @@ void sendDataToServer() {
       String postData;
       serializeJson(doc, postData);
 
-      Serial.println("Attempting to connect to server...");  // Add this line
+      Serial.println("Attempting to connect to server...");
       http.begin("http://44.197.96.78/dashboard/postdata.php/");
       http.addHeader("Content-Type", "application/json");
 
-      Serial.println("Attempting to send data...");  // Add this line
+      Serial.println("Attempting to send data...");
       Serial.println(postData);
       int httpCode = http.POST(postData);   //Send the request
       String payload = http.getString();    //Get the response payload
@@ -152,7 +152,7 @@ void sendDataToServer() {
       Serial.println("httpCode= " + String(httpCode));    // Print HTTP return code
       Serial.print("payload= ");
       Serial.println(payload);                    //Print request response payload
-      Serial.println("Finished sendDataToServer.");  // Add this line
+      Serial.println("Finished sendDataToServer.");
       http.end();
     } 
   else 
