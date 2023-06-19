@@ -10,11 +10,7 @@ $sql_update = "UPDATE temporary_register
                INNER JOIN table_rfid ON temporary_register.id = table_rfid.id 
                SET temporary_register.name = table_rfid.name 
                WHERE temporary_register.name = 'no-name'";
-$sql_update1 = "UPDATE temporary_register 
-               INNER JOIN table_rfid ON temporary_register.id = table_rfid.id 
-               SET temporary_register.username = table_rfid.username";
 $pdo->query($sql_update);
-$pdo->query($sql_update1);
 
 // Query to get latest data from table temporary_register
 $sql_select = "SELECT * FROM temporary_register";

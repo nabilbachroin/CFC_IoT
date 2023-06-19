@@ -30,24 +30,17 @@
 		<meta charset="utf-8">
 		<link href="css/bootstrap.min.css" rel="stylesheet">
 		<script src="js/bootstrap.min.js"></script>
-		<script src="jquery.min.js"></script>
-		<script>
-			$(document).ready(function(){
-				$("#getUID").load("UIDContainer.php");
-				setInterval(function()	{
-					$("#getUID").load("UIDContainer.php");
-				}, 500);
-			});
-		</script>
+		
 		<style>
 		body, html {
 		  height: 100%;
+		  width: 100%;
 		  margin: 0;
 		}
 
 		.bg {
 		  /* The image used */
-		  background-image: url("schema.png");
+		  background-image: url("schema12.png");
 
 		  /* Full height */
 		  height: 100%; 
@@ -57,26 +50,25 @@
 		  background-repeat: no-repeat;
 		  background-size: cover;
 		}
+		
 		{
 			font-family: Arial;
 			display: inline-block;
 			margin: 0px auto;
 			
-		}
+		}	
 		
 		textarea {
-			resize: none;
+			resize:none;
 		}
-		
-		ul.topnav li {float: left;}
 		
 		ul.topnav {
 			list-style-type: none;
 			margin: auto;
 			padding: 0;
 			overflow: hidden;
-			background-color: #333;
-			width: 100%;
+			background-color: #4CAF50;
+			width: 70%;
 		}
 		ul.topnav li {float: left;}
 		
@@ -88,67 +80,56 @@
 			text-decoration: none;
 		}
 		
-		ul.topnav li a:hover:not(.active) {background-color: #ddd;}
+		ul.topnav li a:hover:not(.active) {background-color: #3e8e41;}
 		
-		ul.topnav li a.active {background-color: #4CAF50}
+		ul.topnav li a.active {background-color: #333}
 		
-		ul.topnav li.right {float: right;}
+		ul.topnav li.right {float; right;}
 		
-		@media screen and (max-width: 600px) {
-			ul.topnav li.right,
-			ul.topnav li {float: none;}
-			}
-			
+		div.group-form {
+			margin-left: 20px;
+			margin-bottom: 10px;
+		
 		@media screen and (max-width: 600px) {
 			ul.topnav li.right,
 			ul.topnav li {float: none;}
 		}
 		</style>
 		
-		<title>Home : Smart Parking</title>
+		<title>Edit : Smart Parking</title>
 	</head>
-	<body>
-		<div class="bg">
+	
+	<body class="bg">
+	<div>
 		<h2 align="center">Smart Parking</h2>
-		<ul class="topnav">
-			<li><a href="home.php">Home</a></li>
-			<li><a href="user data.php">User Data</a></li>
-			<li><a class="active" href="registration.php">Registration</a></li>
-			<li><a href="parking.php">Parking free</a></li>
-		</ul>
-		
 		<div class="container">
-			<br>
+		
 			<div class="center" style="margin: 0 auto; width:495px; border-style: solid; border-color: #f2f2f2;">
 				<div class="row">
-					<h3 align="center">Registration Form</h3>
+					<h3 align="center">Edit User Data</h3>
+					<p id="defaultGender" hidden><?php echo $data['gender'];?></p>
 				</div>
-				<br>
-				<form class="form-horizontal" action="insertDB.php" method="post" >
-					<div class="control-group">
-						<label class="control-label">username</label>
-						<div class="controls">
-							<input name="username" type="text" placeholder="" value="<?php echo($_SESSION['username']);?>" readonly>
-						</div>
-					</div>
+			
+				<form class="form-horizontal" action="user data edit tb1.php?id=<?php echo $id?>" method="post">
+					<div class="group-form">
 					<div class="control-group">
 						<label class="control-label">ID</label>
 						<div class="controls">
-							<textarea name="id" id="getUID" placeholder="Please Tag your Card" type="text" required></textarea>
+							<input name="id" type="text" placeholder="" value="<?php echo $data['id'];?>" readonly>
 						</div>
 					</div>
-						
+					
 					<div class="control-group">
 						<label class="control-label">Name</label>
 						<div class="controls">
-							<input id="div_refresh" name="name" type="text" placeholder="" required>
+							<input name="name" type="text" placeholder="" value="<?php echo $data['name'];?>" readonly>
 						</div>
 					</div>
-						
+					
 					<div class="control-group">
 						<label class="control-label">Gender</label>
 						<div class="controls">
-							<select name="gender">
+							<select name="gender" id="mySelect">
 								<option value="Male">Male</option>
 								<option value="Female">Female</option>
 							</select>
@@ -156,33 +137,37 @@
 					</div>
 					
 					<div class="control-group">
-						<label class="control-label">Email</label>
+						<label class="control-label">Email Address</label>
 						<div class="controls">
-							<input name="email" type="text" placeholder="" required>
+							<input name="email" type="text" placeholder="" value="<?php echo $data['email'];?>" required>
 						</div>
 					</div>
-						
+					
 					<div class="control-group">
-						<label class="control-label">Car</label>
+						<label class="control-label">Car Type</label>
 						<div class="controls">
-							<input name="car" type="text" placeholder="" required>
+							<input name="car" type="text" placeholder="" value="<?php echo $data['car'];?>" required>
 						</div>
 					</div>
-						
-					<div class="form-actions">
-						<button type="submit" class="btn btn-success">Save</button>
+					
+					<div class="form-action">
+						<br>
+						<button type="submit" class="btn btn-success">Update</button>
+						<a class="btn" href="user data1.php">Back</a>
+					</div>
 					</div>
 				</form>
-	
 			</div>
-		</div> <!== /container ==>
-	</body>
-	<body>
-		<h2 style="text-align:center">Smart Parking</h2>
-		<ul class="nav navbar-nav navbar-right user-nav">
-			<li class="username"><span><?php echo($_SESSION['username']); ?></span></li>
-			<li class="dropdown avatar-dropdowm">
-		</ul>
-	</body>
+		</div> <!-- /container -->
+		
+		<script>
+			var g = document.getElementById("defaultGender").innerHTML;
+			if(g=="Male") {
+				document.getElementById("mySelect").selectedIndex = "0";
+			} else {
+				document.getElementById("mySelect").selectedIndex = "1";
+			}
+		</script>
 	</div>
+	</body>
 </html>

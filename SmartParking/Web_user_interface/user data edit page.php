@@ -32,11 +32,31 @@
 		<script src="js/bootstrap.min.js"></script>
 		
 		<style>
-		html {
+		body, html {
+		  height: 100%;
+		  width: 100%;
+		  margin: 0;
+		}
+
+		.bg {
+		  /* The image used */
+		  background-image: url("schema12.png");
+
+		  /* Full height */
+		  height: 100%; 
+
+		  /* Center and scale the image nicely */
+		  background-position: center;
+		  background-repeat: no-repeat;
+		  background-size: cover;
+		}
+		
+		{
 			font-family: Arial;
 			display: inline-block;
 			margin: 0px auto;
-		}
+			
+		}	
 		
 		textarea {
 			resize:none;
@@ -66,6 +86,10 @@
 		
 		ul.topnav li.right {float; right;}
 		
+		div.group-form {
+			margin-left: 20px;
+			margin-bottom: 10px;
+		
 		@media screen and (max-width: 600px) {
 			ul.topnav li.right,
 			ul.topnav li {float: none;}
@@ -75,10 +99,9 @@
 		<title>Edit : Smart Parking</title>
 	</head>
 	
-	<body>
-	
+	<body class="bg">
+	<div>
 		<h2 align="center">Smart Parking</h2>
-		
 		<div class="container">
 		
 			<div class="center" style="margin: 0 auto; width:495px; border-style: solid; border-color: #f2f2f2;">
@@ -88,6 +111,7 @@
 				</div>
 			
 				<form class="form-horizontal" action="user data edit tb.php?id=<?php echo $id?>" method="post">
+					<div class="group-form">
 					<div class="control-group">
 						<label class="control-label">ID</label>
 						<div class="controls">
@@ -98,7 +122,7 @@
 					<div class="control-group">
 						<label class="control-label">Name</label>
 						<div class="controls">
-							<input name="name" type="text" placeholder="" value="<?php echo $data['name'];?>" required>
+							<input name="name" type="text" placeholder="" value="<?php echo $data['name'];?>" readonly>
 						</div>
 					</div>
 					
@@ -115,20 +139,22 @@
 					<div class="control-group">
 						<label class="control-label">Email Address</label>
 						<div class="controls">
-							<input name="email" type="text" placeholder="" value="<?php echo $data['email'];?>" readonly>
+							<input name="email" type="text" placeholder="" value="<?php echo $data['email'];?>" required>
 						</div>
 					</div>
 					
 					<div class="control-group">
 						<label class="control-label">Car Type</label>
 						<div class="controls">
-							<input name="car" type="text" placeholder="" value="<?php echo $data['car'];?>" readonly>
+							<input name="car" type="text" placeholder="" value="<?php echo $data['car'];?>" required>
 						</div>
 					</div>
 					
 					<div class="form-action">
+						<br>
 						<button type="submit" class="btn btn-success">Update</button>
 						<a class="btn" href="user data.php">Back</a>
+					</div>
 					</div>
 				</form>
 			</div>
@@ -142,5 +168,6 @@
 				document.getElementById("mySelect").selectedIndex = "1";
 			}
 		</script>
+	</div>
 	</body>
 </html>

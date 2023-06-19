@@ -67,6 +67,10 @@
 			
 		}
 		
+		body {
+				background-image: url(bg.png);
+			}
+		
 		textarea {
 			resize: none;
 		}

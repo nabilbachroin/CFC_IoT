@@ -31,16 +31,9 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta charset="utf-8">
 		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<script src="js/bootstrap.min.js"></script>
 		<script src="jquery.min.js"></script>
-		<script>
-			$(document).ready(function(){
-				$("#postData").load("UIDContainer.php");
-				setInterval(function()	{
-					$("#postData").load("UIDContainer.php");
-				}, 500);
-			});
-		</script>
 		<style>
 		body, html {
 		  height: 100%;
@@ -105,6 +98,14 @@
 		
 		ul.topnav li.right {float: right;}
 		
+		.outline {
+			outline: 5px solid white;
+			margin: auto;
+			margin-top: 20px;
+			width: 99%;
+			height: 270px;
+		}
+		
 		@media screen and (max-width: 600px) {
 			ul.topnav li.right,
 			ul.topnav li {float: none;}
@@ -114,6 +115,54 @@
 			ul.topnav li.right,
 			ul.topnav li {float: none;}
 		}
+		
+		.fa {
+			padding: 10px;
+			font-size: 15px;
+			width: 50px;
+			text-align: center;
+			text-decoration: none;
+			margin: 5px 1px;
+		}
+
+		.fa:hover {
+			opacity: 0.7;
+		}
+
+		.fa-facebook {
+			background: #3B5998;
+			color: white;
+		}
+
+		.fa-twitter {
+			background: #55ACEE;
+			color: white;
+		}
+
+		.fa-google {
+			background: #dd4b39;
+			color: white;
+		}
+
+		.fa-linkedin {
+			background: #007bb5;
+			color: white;
+		}
+
+		.fa-youtube {
+			background: #bb0000;
+			color: white;
+		}
+
+		.fa-instagram {
+			background: #125688;
+			color: white;
+		}
+
+		.fa-pinterest {
+			background: #cb2027;
+			color: white;
+		}
 		</style>
 		
 		<title>Home : Smart Parking</title>
@@ -122,50 +171,47 @@
 		<div>
 		<h2 style="text-align:center">Smart Parking</h2>
 		<ul class="topnav">
-			<li><a href="home1.php">Home</a></li>
-			<li><a href="user data1.php">User Data</a></li>
-			<li><a class="active" href="parking1.php">Status Tracking</a></li>
-			<li><a href="balance.php">Top Up Balance</a></li>
-			<li><a href="help1.php">Help</a></li>
+			<li><a href="home.php">Home</a></li>
+			<li><a href="user data.php">User Data</a></li>
+			<li><a class="active" href="help.php">Help</a></li>
 		</ul>
 		<br>
-		<div class="container">
-			<div class="row">
-				<h3>PARKING</h3>
-			</div>
-			<div class="row">
-				<table class="table table-striped">
-					<thead>
-						<tr bgcolor="$10a0c5" color="$FFFFFF">
-							<th>ID</th>
-							<th>Name</th>
-							<th>Status</th>
-							<th>Balance</th>
-						</tr>
-					</thead>
-					<tbody>
-					<?php
-					  // Include the database connection file
-
-					  if (isset($cardData) && (is_array($cardData) || is_object($cardData)))
-					  {
-						foreach ($cardData as $card) {
-						   echo "<tr>";
-						   echo "<td>" . $card["UID"] . "</td>";
-						   echo "<td>" . $card["name"] . "</td>";
-						   echo "<td>" . $card["status"] . "</td>";
-						   echo "<td>" . $card["balance"] . "</td>";
-						   echo "</tr>";
-						   
-						} 
-					  }
-					?>
-
-					</tbody>
-				</table>
+		<div>
+			<div style="position: absolute; top: 100px; left: 10px; width: 1000px;">
 				<br>
+				<h3>ANNOUNCEMENT</h3>
 			</div>
-		</div> <!== /container ==>
+			<br>
+			<br>
+			<div class="outline">
+			<a style="font-size:25px;">&nbsp;&#9673; THERE IS NO ANNOUNCEMENT YET</a>
+			<br>
+			<a style="font-size:25px;">&nbsp;&#9673; THERE IS NO ANNOUNCEMENT YET</a>
+			<br>
+			<a style="font-size:25px;">&nbsp;&#9673; THERE IS NO ANNOUNCEMENT YET</a>
+			<br>
+			<a style="font-size:25px;">&nbsp;&#9673; THERE IS NO ANNOUNCEMENT YET</a>
+			<br>
+			<a style="font-size:25px;">&nbsp;&#9673; THERE IS NO ANNOUNCEMENT YET</a>
+			<br>
+			<a style="font-size:25px;">&nbsp;&#9673; THERE IS NO ANNOUNCEMENT YET</a>
+			<br>
+			<a style="font-size:25px;">&nbsp;&#9673; THERE IS NO ANNOUNCEMENT YET</a>
+			</div>
+			<div style="position: absolute; bottom: 0px; left: 10px; width: 1000px;">
+				<h3>Contact Us</h3>
+				<p>Tel	&nbsp;: +886954022477</p>
+			</div>
+			<div style="position: absolute; bottom: 0px; right: 0px; width: 400px;">
+			<h3>Our Social Media</h3>
+			<a href="#" class="fa fa-facebook"></a>
+			<a href="#" class="fa fa-twitter"></a>
+			<a href="#" class="fa fa-google"></a>
+			<a href="#" class="fa fa-linkedin"></a>
+			<a href="#" class="fa fa-youtube"></a>
+			<a href="#" class="fa fa-instagram"></a>
+			<a href="#" class="fa fa-pinterest"></a>
+			</div>
 		</div>
 	</body>
 </html>

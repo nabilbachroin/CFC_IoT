@@ -47,7 +47,7 @@
 
 		.bg {
 		  /* The image used */
-		  background-image: url("schema.png");
+		  background-image: url("schema12.png");
 
 		  /* Full height */
 		  height: 100%; 
@@ -94,6 +94,9 @@
 		
 		ul.topnav li.right {float: right;}
 		
+		div.group-form {
+			margin-left: 20px;
+		
 		@media screen and (max-width: 600px) {
 			ul.topnav li.right,
 			ul.topnav li {float: none;}
@@ -107,25 +110,26 @@
 		
 		<title>Home : Smart Parking</title>
 	</head>
-	<body>
-	
+	<body class="bg">
+		<div>
 		<h2 align="center">Smart Parking</h2>
 		<ul class="topnav">
 			<li><a href="home1.php">Home</a></li>
 			<li><a href="user data1.php">User Data</a></li>
 			<li><a class="active" href="registration_admin.php">Registration</a></li>
-			<li><a href="parking.php">Parking free</a></li>
-			<li><a href="balance.php">Balance</a></li>
+			<li><a href="parking1.php">Status Tracking</a></li>
+			<li><a href="balance.php">Top Up Balance</a></li>
 		</ul>
 		
 		<div class="container">
 			<br>
-			<div class="center" style="margin: 0 auto; width:495px; border-style: solid; border-color: #f2f2f2;">
+			<div class="center" style="margin: 0 auto; width:495px; border-style: solid; border-color: #ffffff;">
 				<div class="row">
 					<h3 align="center">Registration Form</h3>
 				</div>
 				<br>
 				<form class="form-horizontal" action="insertDB.php" method="post" >
+					<div class="group-form">
 					<div class="control-group">
 						<label class="control-label">Username</label>
 						<div class="controls">
@@ -173,16 +177,11 @@
 					<div class="form-actions">
 						<button type="submit" class="btn btn-success">Save</button>
 					</div>
+					</div>
 				</form>
 	
 			</div>
 		</div> <!== /container ==>
-	</body>
-	<body>
-		<h2 style="text-align:center">Smart Parking</h2>
-		<ul class="nav navbar-nav navbar-right user-nav">
-			<li class="username"><span><?php echo($_SESSION['username']); ?></span></li>
-			<li class="dropdown avatar-dropdowm">
-		</ul>
+		</div>
 	</body>
 </html>

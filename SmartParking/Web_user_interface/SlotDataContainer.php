@@ -1,6 +1,6 @@
 <?php
 $slotData = array (
-  'parkingSlots' => 5,
+  'parkingSlots' => 4,
   'electricChargingSlots' => 0,
 );
 ?>

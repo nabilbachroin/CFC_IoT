@@ -24,6 +24,22 @@ if ($_POST["password"] !== $_POST["password_confirmation"]) {
 	die("Password must match");
 }
 
+if (empty($_POST["id"])) {
+	die("id is required");
+}
+	
+if (empty($_POST["name"])) {
+	die("name is required");
+}
+	
+if (empty($_POST["gender"])) {
+	die("gender is required");
+}
+
+if (empty($_POST["car"])) {
+	die("car is required");
+}
+
 $password_hash = password_hash($_POST["password"], PASSWORD_DEFAULT);
 
 $mysqli = require __DIR__ . "/database_signup.php";
@@ -47,8 +63,8 @@ if ($stmt->execute()) {
 
 } else{
 	
-	if ($mysqli0>errno === 1062) {
-		die("username already taken");
+	if ($mysqli>errno) {
+		die("please fill in your personal data correctly");
 	} else {
 		die($mysqli->error . " " . $mysqli->errno);
 	}

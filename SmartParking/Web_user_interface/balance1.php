@@ -97,7 +97,7 @@
 			<br>
 			<div class="center" style="margin: 0 auto; width:495px; border-style: solid; border-color: #f2f2f2;">
 				<div class="row">
-					<h3 align="center">Registration Form</h3>
+					<h3 align="center">Top Up</h3>
 				</div>
 				<br>
 				<form class="form-horizontal" action="balancesum.php" method="post" >
