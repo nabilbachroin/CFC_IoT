@@ -86,7 +86,7 @@
 		}
 		</style>
 		
-		<title>Home : Smart Parking</title>
+		<title>Change Password : Smart Parking</title>
 	</head>
 <body class="bg">
 	<div>
@@ -111,7 +111,11 @@
 			<input type="password" id="password_confirmation" name="password_confirmation">
 			</div>
 		</div>
+		<div class="form-action">
+		<br>
 		<button>Confirm</button>
+		<a class="btn" href="home.php">Back</a>
+		</div>
 	</form>
 	</div>
 	</div>

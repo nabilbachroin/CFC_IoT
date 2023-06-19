@@ -165,7 +165,7 @@
 		}
 		</style>
 		
-		<title>Home : Smart Parking</title>
+		<title>Help : Smart Parking</title>
 	</head>
 	<body class="bg">
 		<div>

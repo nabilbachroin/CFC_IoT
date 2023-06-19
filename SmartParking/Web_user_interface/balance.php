@@ -94,7 +94,7 @@
 			
 		</style>
 		
-		<title>Home : Smart Parking</title>
+		<title>Balance : Smart Parking</title>
 	</head>
 	<body class="bg">
 		<div>

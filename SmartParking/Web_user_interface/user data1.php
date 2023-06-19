@@ -133,7 +133,7 @@
 		<h2 style="text-align:center">Smart Parking</h2>
 		<ul class="topnav">
 			<li><a href="home1.php">Home</a></li>
-			<li><a class="active" href="user data1s.php">User Data</a></li>
+			<li><a class="active" href="user data1.php">User Data</a></li>
 			<li><a href="parking1.php">Status Tracking</a></li>
 			<li><a href="balance.php">Top Up Balance</a></li>
 			<li><a href="help1.php">Help</a></li>

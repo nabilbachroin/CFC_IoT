@@ -116,7 +116,7 @@
 		}
 		</style>
 		
-		<title>Home : Smart Parking</title>
+		<title>Status Tracking : Smart Parking</title>
 	</head>
 	<body class="bg">
 		<div>
@@ -131,7 +131,7 @@
 		<br>
 		<div class="container">
 			<div class="row">
-				<h3>PARKING</h3>
+				<h3>Status Tracking</h3>
 			</div>
 			<div class="row">
 				<table class="table table-striped">

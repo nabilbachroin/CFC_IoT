@@ -101,7 +101,7 @@
 			margin-right: auto;
 		}
 		</style>
-		<title>Home : Smart Parking Admin</title>
+		<title>Home : Smart Parking</title>
 	</head>
 	
 	<body class="bg">

@@ -101,7 +101,7 @@
 			margin-right: auto;
 		}
 		</style>
-		<title>Home : Smart Parking Admin</title>
+		<title>Home : Smart Parking</title>
 	</head>
 	
 	<body class="bg">
@@ -121,7 +121,7 @@
 			<section class="container wrapper">
 				<div class="page-header">
 					<h2 class="display-5">Welcome <?php echo $_SESSION['username']; ?></h2>
-					<h2><a href="password_reset.php" class="btn btn-block btn-outline-primary">Change Password</a>
+					<h2><a href="password_reset1.php" class="btn btn-block btn-outline-primary">Change Password</a>
 						<a href="logout.php" class="btn btn-block btn-outline-danger">Sign Out</a></h2>
 				</div>
 			</section>
