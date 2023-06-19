@@ -17,12 +17,14 @@ void checkConnection()
           //Serial.println("Ping failed");
           client.stop();
         }
-      else 
+      else
         {
           digitalWrite(led_online, HIGH);
           digitalWrite(led_offline, LOW);
           //Serial.println("Ping successful");
           client.stop();
+          get_update_from_temporary_register_table();
+          writeDatabase(SD, "/registered.txt", "/status_and_balance.txt", "/availableSlots.txt");
         }
       after_disconnect=false;
     }

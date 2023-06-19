@@ -1,10 +1,10 @@
 /* Need to test:
-1. When the available parking slot is only for electric charging slot, if still want to enter, so the fee is like using electric charging slot
-2. electric on even the system is starting
-3. balance
-4. register
-5. if is there object when servo is working
-6. internet connection
+1. When the available parking slot is only for electric charging slot, if still want to enter, so the fee is like using electric charging slot<<
+2. electric on even the system is starting<<
+3. balance <<<
+4. register <<<
+5. if is there object when servo is working<<
+6. internet connection<<
 7. registrasion demo 
   a. say that the data from local database esp, will be save on temporary table
   b. before writing, we always clear the old data
@@ -14,11 +14,7 @@
   f. after that, send the data to the ESP32 to update local database
 8. Already register on website, but the internet connection on system still broke
    So the local database still not update yet, and the system can give the announcement that the 
-   current position there is internet connection inference
-
-- [My Friends]:
-- setting display
-- Buy for Bright Green Led
+   current position there is internet connection inference<<<
 */
 
 #include <FS.h>
@@ -118,7 +114,7 @@ void setup() {
   playSpeaker("system_starting.mp3");
 
   WiFi.begin(ssid, password);
-  delay(4000);
+  delay(4500);
   readDatabase(SD, "/registered.txt", "/status_and_balance.txt", "/availableSlots.txt");
   if(WiFi.status() == WL_CONNECTED)
     {
@@ -129,10 +125,11 @@ void setup() {
       Serial.println("================");
     }
   Serial.println("Out from void setup");
+  sendDataToServer();
 }
  
 void loop() {
-  if (millis() - lastCheck >= 3000) 
+  if (millis() - lastCheck >= 7000) 
     {
       checkConnection();
       lastCheck = millis();
