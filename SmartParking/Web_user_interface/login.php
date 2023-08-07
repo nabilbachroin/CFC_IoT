@@ -111,19 +111,39 @@
   <title>Sign in</title>
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <style>
+	body, html {
+		height: 100%;
+		width: 100%;
+		margin: 0;
+	}
+
+	.bg {
+		/* The image used */
+		background-image: url("schema12.png");
+
+		/* Full height */
+		height: 100%; 
+
+		/* Center and scale the image nicely */
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
     .wrapper{ 
-      width: 500px; 
-      padding: 20px; 
+		width: 500px; 
+		padding: 20px; 
     }
     .wrapper h2 {text-align: center}
     .wrapper form .form-group span {color: red;}
+	
   </style>
 </head>
 <body>
+<div class="bg">
   <main>
     <section class="container wrapper">
       <h2 class="display-4 pt-3">Login</h2>
-          <p class="text-center">Please fill this form to create an account.</p>
+          <p class="text-center">Please fill this form to enter the website.</p>
           <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
             <div class="form-group <?php (!empty($username_err))?'has_error':'';?>">
               <label for="username">Username</label>
@@ -138,11 +158,13 @@
             </div>
 
             <div class="form-group">
+			<br>
               <input type="submit" class="btn btn-block btn-outline-primary" value="login">
             </div>
             <p>Don't have an account? <a href="register.php">Sign up</a>.</p>
           </form>
     </section>
   </main>
+</div>
 </body>
 </html>

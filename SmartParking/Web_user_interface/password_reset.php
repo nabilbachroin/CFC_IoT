@@ -1,6 +1,14 @@
 <?php
-	// Include config file
-	require_once 'config/config.php';
+	$Write="<?php $" . "UIDresult=''; " . "echo $" . "UIDresult;" . " ?>";
+	file_put_contents('UIDContainer.php',$Write);
+	
+	// Initialize session
+	session_start();
+
+	if (!isset($_SESSION['loggedin']) && $_SESSION['loggedin'] !== false) {
+		header('location: login.php');
+		exit;
+	}
 ?>
 
 <!DOCTYPE html>
@@ -11,18 +19,9 @@
 		<link href="css/bootstrap.min.css" rel="stylesheet">
 		<script src="js/bootstrap.min.js"></script>
 		<script src="jquery.min.js"></script>
-		<script>
-			$(document).ready(function(){
-				$("#getUID").load("UIDContainer.php");
-				setInterval(function()	{
-					$("#getUID").load("UIDContainer.php");
-				}, 500);
-			});
-		</script>
 		<style>
 		body, html {
 		  height: 100%;
-		  width: 100%;
 		  margin: 0;
 		}
 
@@ -43,7 +42,7 @@
 			font-family: Arial;
 			display: inline-block;
 			margin: 0px auto;
-			
+			text-align: center;
 		}
 		
 		textarea {
@@ -87,28 +86,18 @@
 		}
 		</style>
 		
-		<title>Register : Smart Parking</title>
+		<title>Change Password : Smart Parking</title>
 	</head>
 <body class="bg">
 	<div>
-	<h1 align="center">Sign up</h1>
-	<p class="text-center">Please fill this form to create an account</p>
+	<h1 align="center">Change Password</h1>
+	
 	<div class="center" style="margin: 0 auto; width:495px; border-style: solid; border-color: #f2f2f2;">
-	<form action="signup_flow.php" method="post" id="signup" novalidate>
-		<div class="control-group">
-			<label for="username">Username</label>
-			<div class="controls">
-			<input type="text" id="username" name="username">
-			</div>
-		</div>
-		
-		<div class="control-group">
-			<label for="email">email</label>
-			<div class="controls">
-			<input type="email" id="email" name="email">
-			</div>
-		</div>
-		
+				<div class="row">
+					<h3 align="center">Change Your Password</h3>
+				</div>
+	
+	<form action="password_flow.php" method="post" id="password_reset" novalidate>
 		<div class="control-group">
 			<label for="password">Password</label>
 			<div class="controls">
@@ -122,41 +111,12 @@
 			<input type="password" id="password_confirmation" name="password_confirmation">
 			</div>
 		</div>
-		
-		<div class="control-group">
-			<label class="control-label">ID</label>
-				<div class="controls">
-					<textarea name="id" id="getUID" placeholder="Please Tag your Card" type="text" required></textarea>
-				</div>
-		</div>
-						
-		<div class="control-group">
-			<label class="control-label">Name</label>
-				<div class="controls">
-					<input id="div_refresh" name="name" type="text" placeholder="" required>
-				</div>
-		</div>
-						
-		<div class="control-group">
-			<label class="control-label">Gender</label>
-				<div class="controls">
-					<select name="gender">
-					<option value="Male">Male</option>
-					<option value="Female">Female</option>
-					</select>
-				</div>
-		</div>
-						
-		<div class="control-group">
-			<label class="control-label">Car</label>
-				<div class="controls">
-					<input name="car" type="text" placeholder="" required>
-				</div>
-		</div>
+		<div class="form-action">
 		<br>
-		<button>Sign up</button>
+		<button>Confirm</button>
+		<a class="btn" href="home.php">Back</a>
+		</div>
 	</form>
-	<p>Already have an account? <a href="login.php">Login here</a>.</p>
 	</div>
 	</div>
 </body>

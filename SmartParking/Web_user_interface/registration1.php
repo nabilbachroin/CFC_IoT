@@ -90,7 +90,6 @@
 		<title>Home : Smart Parking</title>
 	</head>
 	<body>
-	
 		<h2 align="center">Smart Parking</h2>
 		<ul class="topnav">
 			<li><a href="home.php">Home</a></li>

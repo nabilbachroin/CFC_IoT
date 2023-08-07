@@ -28,7 +28,7 @@
 			.wrapper form .form-group span {color: red;}
 			
 			body {
-				background-image: url(bg.png);
+				background-image=: url(bg.png);
 			}
 			
 			.btn{
@@ -36,19 +36,6 @@
 				left:200%;
 			}
 		</style>
-	</head>
-	<body>
-		<main>
-			<section class="container wrapper">
-				<div class="page-header">
-					<h2 class="display-5">Welcome home Creator <?php echo $_SESSION['username']; ?></h2>
-					<h2><a href="password_reset.php" class="btn btn-block btn-outline-warning">Reset Password</a>
-						<a href="logout.php" class="btn btn-block btn-outline-danger">Sign Out</a></h2>
-				</div>
-			</section>
-		</main>
-	</body>
-	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta charset="utf-8">
 		<link href="css/bootstrap.min.css" rel="stylesheet">
@@ -61,7 +48,7 @@
 
 		.bg {
 		  /* The image used */
-		  background-image: url("schema.png");
+		  background-image: url("schema12.png");
 
 		  /* Full height */
 		  height: 100%; 
@@ -114,22 +101,31 @@
 			margin-right: auto;
 		}
 		</style>
-		<title>Home : Smart Parking Admin</title>
+		<title>Home : Smart Parking</title>
 	</head>
 	
-	<body>
-		<div class="bg">
+	<body class="bg">
+		<div>
 		<h2 style="text-align:center">Smart Parking</h2>
 		<ul class="topnav">
-			<li  class="username"><span><?php echo($_SESSION['username']); ?></span></li>
+			<li><a class="username"><span>Username : <?php echo($_SESSION['username']); ?></span></a></li>
 			<li><a class="active" href="home1.php">Home</a></li>
 			<li><a href="user data1.php">User Data</a></li>
-			<li><a href="registration_admin.php">Registration</a></li>
-			<li><a href="parking.php">Parking Free</a></li>
-			<li><a href="balance.php">Balance</a></li>
+			<li><a href="parking1.php">Status Tracking</a></li>
+			<li><a href="balance.php">Top Up Balance</a></li>
+			<li><a href="help1.php">Help</a></li>
 		</ul>
 		<br>
 		<h3 style="text-align:center">Welcome to Team 4 Project "Smart Parking"</h3>
+		<main>
+			<section class="container wrapper">
+				<div class="page-header">
+					<h2 class="display-5">Welcome <?php echo $_SESSION['username']; ?></h2>
+					<h2><a href="password_reset1.php" class="btn btn-block btn-outline-primary">Change Password</a>
+						<a href="logout.php" class="btn btn-block btn-outline-danger">Sign Out</a></h2>
+				</div>
+			</section>
+		</main>
 		</div>
 	</body>
 </html>
