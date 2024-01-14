@@ -28,7 +28,7 @@ update from Harun 23 May 2023
 
 ## :beginner: Product Info
 
-- Product Name:
+- Product Name: Smart Parking Lot System
 - Status: 
     - [ ] In progress
     - [ ] In review. Reviewer:
